@@ -1,17 +1,13 @@
 # ⌨️ Keyboards
 
 ```
-.
-├── niu_mini:lily
-│   └── lily.c
-│
-├── idobo:sven
-│   └── sven.c
-│
-└── dz60:undertow
-    ├── undertow.c
-    ├── undertow.h
-    └── undertow.mk
+niu_mini:lily ── lily.c
+
+idobo:sven ───── sven.c
+
+dz60:undertow ┬─ undertow.c
+              ├─ undertow.h
+              └─ undertow.mk
 ```
 
 ## quick start
@@ -46,13 +42,17 @@ flash.sh board_model:board_name
 
 `flash.sh` wraps the QMK compile step and automatically flashes an eligible connected keyboard.
 
-Any `.c`, `.h` or `.mk` files alongside `flash.sh` and `qmk` will be hard-linked into the correct location based on the provided argument, which is accepted in the same format as QMK's `make` argument.
+Using the Undertow keyboard in this repository as an example, here are the steps the script executes:
 
-1. The `board_name.c` file will be hard linked to `qmk/keyboards/board_model/keymaps/board_name/keymap.c`, adding a new keymap to the firmware's `make` scope easily.
+```
+flash.sh dz60:undertow flash
+```
 
-2. Any `board_name.h` files will be hard linked to `qmk/keyboards/board_model/board_model.h`, replacing the layout definition for that board.
+1. The `keymaps/undertow.c` file will be hard linked to `qmk/keyboards/dz60/keymaps/undertow/keymap.c`.
 
-3. Any `board_name.mk` files will be hard linked to `qmk/keyboards/board_model/rules.mk`, replacing the rule flags for that board.
+2. The `undertow.h` file will be hard linked to `qmk/keyboards/undertow/dz60.h`, replacing the layout definition for that board.
+
+3. The `undertow.mk` file will be hard linked to `qmk/keyboards/dz60/rules.mk`.
 
 ```
 undertow.c  -> qmk/keyboards/dz60/keymaps/undertow/keymap.c
@@ -60,8 +60,8 @@ undertow.h  -> qmk/keyboards/dz60/dz60.h
 undertow.mk -> qmk/keyboards/dz60/rules.mk
 ```
 
-If there are no local files, `flash.sh` will simply compile and flash the existing keymap in the core repo QMK.
+Any directories that do not exist already are created, but the script _will_ exit if the model is not found in the `keyboards` directory.  This prevents useless files from being written into the repository in the event of a typo, a hard-learned lesson from when I wrote the script.
 
-It will also exit if the `board_model` keyboard is not found within QMK, so as not to write useless files and directories into the firmware repository in the event of a typo.
+If the script finds no matching local files, it will simply compile and/or flash the existing keymap in QMK core.
 
 The `flash` argument on the end of the command is optional and now _disabled_ by default due to some fun problems I've had with `dfu-programmer` on Windows.
