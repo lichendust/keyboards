@@ -2,54 +2,20 @@
 
 enum layers {
 	_BL = 1, // blender
+	_OS = 4,
 	_NP = 6, // numpad layer
 	_FN = 5, // main fn layer
 	_CT = 9, // control layer
 };
 
-
-// TAP DANCES
-enum tap_dances {
-	HOME = 0,
-};
-
-qk_tap_dance_action_t tap_dance_actions[] = {
-	[HOME] = ACTION_TAP_DANCE_DOUBLE(KC_H, SGUI(KC_H)) // HH to go to browser home
-};
-
-
-// MACROS
-enum macros {
-	RSYNC_EXC = SAFE_RANGE,
-	RSYNC_RUN,
-};
-
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-	switch (keycode) {
-		case RSYNC_EXC:
-			if (record->event.pressed) {
-				SEND_STRING("ls -a > .exclude; vim .exclude");
-			}
-			break;
-		case RSYNC_RUN:
-			if (record->event.pressed) {
-				SEND_STRING("rsync -av --delete --delete-excluded --ignore-errors --exclude-from=\"$HOME/.exclude\" ./ /Volumes/");
-			}
-			break;
-	}
-	return true;
-};
-
-
-// KEYMAP
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	[0] = UNDERTOW(
-	//  1               2        3        4        5        6        7        8        9        10       11       12       13       14       15
+	//  1               2        3        4        5        6       7         8        9        10       11       12       13       14       15
 		KC_ESC,         KC_1,    KC_2,    KC_3,    KC_4,    KC_5,   KC_6,     KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS, KC_EQL,           KC_BSPC,
 		LT(_NP,KC_TAB), KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,   KC_Y,     KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC, KC_RBRC,
-		MO(_FN),        KC_A,    KC_S,    KC_D,    KC_F,    KC_G,   TD(HOME), KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT, KC_BSLS,          KC_ENT,
+		MO(_FN),        KC_A,    KC_S,    KC_D,    KC_F,    KC_G,   KC_H,     KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT, KC_BSLS,          KC_ENT,
 		KC_LSFT,        KC_GRV,  KC_Z,    KC_X,    KC_C,    KC_V,   KC_B,     KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_NUHS, KC_UP,   KC_RSFT,
-		KC_LGUI,        KC_LALT, KC_LCTL,                           KC_SPC,                              KC_RCTL, MO(_CT), KC_LEFT, KC_DOWN, KC_RGHT
+		KC_LGUI,        KC_LALT, KC_LCTL,                           KC_SPC,                              MO(_FN), MO(_CT), KC_LEFT, KC_DOWN, KC_RGHT
 	),
 
 	[_FN] = UNDERTOW(
@@ -81,13 +47,23 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		_______, _______, _______,                            _______,                               _______, _______, _______, _______, _______
 	),
 
+	// OS SWAP
+	[_OS] = UNDERTOW(
+	//  1        2        3        4        5        6        7        8        9        10       11       12       13       14       15
+		_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,          _______,
+		_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+		_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,          _______,
+		_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+		KC_LCTL, _______, KC_LGUI,                            _______,                            _______, _______, _______, _______, _______
+	),
+
 	// control layer
 	[_CT] = UNDERTOW(
 	//  1        2        3        4        5        6        7        8        9        10       11       12       13        14      15
 		RESET,   EEP_RST, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,          XXXXXXX,
 		XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
 		XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,          XXXXXXX,
-		XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+		XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, TO(_OS), XXXXXXX,
 		XXXXXXX, XXXXXXX, XXXXXXX,                            XXXXXXX,                            XXXXXXX, _______, TO(_BL), TO(0),   TO(_NP)
 	),
 };
