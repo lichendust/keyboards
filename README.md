@@ -60,7 +60,7 @@ Any directories that do not exist already are created, but the script _will_ exi
 
 If the script finds no matching local files, it will simply compile and/or flash a keymap that ships with QMK.
 
-## Windows Flashing
+## windows flashing
 
 The `flash` argument on the end of the command is optional and now _disabled_ by default due to `dfu-programmer` not working (for me) on Windows.
 
