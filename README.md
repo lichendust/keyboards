@@ -48,20 +48,24 @@ Using the Undertow keyboard in this repository as an example, here are the steps
 flash.sh dz60:undertow flash
 ```
 
-1. The `keymaps/undertow.c` file will be hard linked to `qmk/keyboards/dz60/keymaps/undertow/keymap.c`.
-
-2. The `undertow.h` file will be hard linked to `qmk/keyboards/undertow/dz60.h`, replacing the layout definition for that board.
-
-3. The `undertow.mk` file will be hard linked to `qmk/keyboards/dz60/rules.mk`.
+It then hardlinks the files in the following pattern:
 
 ```
-undertow.c  -> qmk/keyboards/dz60/keymaps/undertow/keymap.c
-undertow.h  -> qmk/keyboards/dz60/dz60.h
-undertow.mk -> qmk/keyboards/dz60/rules.mk
+keymaps/undertow.c  -> qmk/keyboards/dz60/keymaps/undertow/keymap.c
+keymaps/undertow.h  -> qmk/keyboards/dz60/dz60.h
+keymaps/undertow.mk -> qmk/keyboards/dz60/rules.mk
 ```
 
 Any directories that do not exist already are created, but the script _will_ exit if the model is not found in the `keyboards` directory.  This prevents useless files from being written into the repository in the event of a typo, a hard-learned lesson from when I wrote the script.
 
-If the script finds no matching local files, it will simply compile and/or flash the existing keymap in QMK core.
+If the script finds no matching local files, it will simply compile and/or flash a keymap that ships with QMK.
 
-The `flash` argument on the end of the command is optional and now _disabled_ by default due to some fun problems I've had with `dfu-programmer` on Windows.
+## Windows Flashing
+
+The `flash` argument on the end of the command is optional and now _disabled_ by default due to `dfu-programmer` not working (for me) on Windows.
+
+`dfu-programmer.exe` seems to kick back to the usage output no matter what I pass to it (without error, except the implied "bad argument").  WSL Linux's `dfu-programmer` can't seem to find any USB ports, which isn't really all that surprising.  I'm sure there's some horrendous hack I can perform for that, but I can't be bothered.
+
+My current solution is just to use QMK Toolbox for the flashing step.
+
+This script works great on my Mac though, so that's nice.  By extension, it should work without issue on all Unix-based platforms.
