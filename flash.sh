@@ -56,15 +56,11 @@ echo
 # make firmware
 pushd qmk > /dev/null
 echo "Compiling ${keymap}..."
-
-make "$1" > /dev/null
-
+make "$1"
 popd > /dev/null
 
-echo
-
-if [ $2 ] && [ $2 = "flash" ]; then
-	dfu-programmer atmega32u4 erase --force && \
-	dfu-programmer atmega32u4 flash "qmk/${target}_${keymap}.hex" && \
-	dfu-programmer atmega32u4 reset
-fi
+# if [ $2 ] && [ $2 = "flash" ]; then
+	# dfu-programmer atmega32u4 erase --force && \
+	# dfu-programmer atmega32u4 flash "qmk/${target}_${keymap}.hex" && \
+	# dfu-programmer atmega32u4 reset
+# fi
