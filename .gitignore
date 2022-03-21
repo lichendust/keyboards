@@ -1,3 +1,6 @@
 *.hex
+*.exe
 *.sublime*
+
 /qmk/
+/special/
