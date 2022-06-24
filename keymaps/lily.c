@@ -46,8 +46,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 	//           undo     redo     bucket   layer n  cell c     cell dup  cell link group
 		KC_LSFT, _______, _______, KC_G,    S(KC_N), KC_DEL,    A(KC_D),  A(KC_M),  LSA(KC_G), XXXXXXX, KC_UP,   XXXXXXX,
-
-	//  picker            zoom     pan
+q
+	//  picker            zoom*    pan                                                                                      * zoom must changed to "quick zoom" in program
 		KC_LALT, XXXXXXX, KC_Z,    KC_SPC,  _______,      _______,        _______,  _______,   KC_LEFT, KC_DOWN, KC_RGHT
 	),
 
