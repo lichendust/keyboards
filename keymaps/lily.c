@@ -1,18 +1,50 @@
 #include QMK_KEYBOARD_H
 
+enum layers {
+    CONTROL = 0,
+    KRITA,
+    ASEPRITE,
+    REAPER,
+    BLENDER_A,
+    BLENDER_B,
+};
+
+enum custom_keycodes {
+    RDEL_L = SAFE_RANGE,
+    RDEL_R,
+};
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+    case RDEL_L:
+        if (record->event.pressed) {
+           SEND_STRING(SS_TAP(X_K));           // K
+           SEND_STRING(SS_TAP(X_DEL));         // Delete
+        }
+        break;
+    case RDEL_R:
+        if (record->event.pressed) {
+           SEND_STRING(SS_LSFT(SS_TAP(X_K)));  // Shift + K
+           SEND_STRING(SS_TAP(X_DEL));         // Delete
+        }
+        break;
+    }
+    return true;
+};
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     // base (control) layer
-    [0] = LAYOUT_planck_mit(
-        RESET,   RGB_TOG, RGB_MOD,   RGB_HUI, RGB_HUD, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_BSPC,
+    [CONTROL] = LAYOUT_planck_mit(
+        RESET,   RGB_TOG, RGB_MOD,   RGB_HUI, RGB_HUD, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,     XXXXXXX,       XXXXXXX,       KC_BSPC,
 
     //
-        XXXXXXX, XXXXXXX, XXXXXXX,   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        XXXXXXX, XXXXXXX, XXXXXXX,   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,     XXXXXXX,       XXXXXXX,       XXXXXXX,
 
     //           undo     redo
-        XXXXXXX, C(KC_Z), RCS(KC_Z), XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, TO(4),   TO(5),   XXXXXXX,
+        XXXXXXX, C(KC_Z), RCS(KC_Z), XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,     TO(BLENDER_A), TO(BLENDER_B), XXXXXXX,
 
     //                                        prev         play/pause    next
-        XXXXXXX, XXXXXXX, XXXXXXX,   XXXXXXX, KC_MPRV,     KC_MPLY,      KC_MNXT, TO(0),   TO(1),   TO(2),   TO(3)
+        XXXXXXX, XXXXXXX, XXXXXXX,   XXXXXXX, KC_MPRV,     KC_MPLY,      KC_MNXT, TO(CONTROL), TO(KRITA),     TO(ASEPRITE),  TO(REAPER)
     ),
 
     /*
@@ -22,7 +54,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     */
 
     // krita
-    [1] = LAYOUT_planck_mit(
+    [KRITA] = LAYOUT_planck_mit(
     //  esc      fit          rot        100%      deselect    reselect   swap c                  cut      copy       paste
         KC_ESC,  KC_3,        KC_5,      KC_1,     RCS(KC_A),  RCS(KC_D), KC_X,       XXXXXXX,    C(KC_X), C(KC_C),   C(KC_V), _______,
 
@@ -37,7 +69,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     // aseprite
-    [2] = LAYOUT_planck_mit(
+    [ASEPRITE] = LAYOUT_planck_mit(
     //  esc                                 deselect reselect   swap c              cut        copy     paste
         KC_ESC,  XXXXXXX, XXXXXXX, XXXXXXX, C(KC_D), RCS(KC_D), KC_X,     XXXXXXX,  C(KC_X),   C(KC_C), C(KC_V), _______,
 
@@ -52,11 +84,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     // reaper tracking / composing
-    [3] = LAYOUT_planck_mit(
-        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,     XXXXXXX,      XXXXXXX, TO(0),   XXXXXXX, XXXXXXX, XXXXXXX
+    [REAPER] = LAYOUT_planck_mit(
+    //  esc      m rec    m over
+        KC_ESC,  KC_F20,  KC_F21,  XXXXXXX,  XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,     XXXXXXX, XXXXXXX, KC_DEL,
+    //           solo     mute              glue item  split d  split    split d
+        XXXXXXX, KC_S,    KC_M,    XXXXXXX, RCS(KC_G), RDEL_L,  KC_K,    RDEL_R,  XXXXXXX,     XXXXXXX, XXXXXXX, XXXXXXX,
+    //           undo     redo
+        KC_LSFT, _______, _______, XXXXXXX, XXXXXXX,   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,     XXXXXXX, KC_UP,   XXXXXXX,
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,        KC_SPC,      XXXXXXX, TO(CONTROL), KC_LEFT, KC_DOWN, KC_RGHT
 
         /*
             notes:
@@ -71,8 +106,22 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         */
     ),
 
+    // blender animation / general
+    [BLENDER_A] = LAYOUT_planck_mit(
+        KC_ESC,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,     XXXXXXX,      XXXXXXX, TO(CONTROL),   XXXXXXX, XXXXXXX, XXXXXXX
+
+        /*
+            notes:
+            paste flipped poses
+            show/hide overlays toggle
+        */
+    ),
+
     // blender boarding
-    [4] = LAYOUT_planck_mit(
+    [BLENDER_B] = LAYOUT_planck_mit(
     //  esc      fit      camera
         KC_ESC,  KC_HOME, KC_P0,        XXXXXXX,      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
 
@@ -84,19 +133,5 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     //  ctrl     alt      zoom          pan
         KC_LCTL, KC_LALT, LCA(XXXXXXX), LSA(XXXXXXX), _______,     _______,      _______, _______, KC_LEFT, KC_DOWN, KC_RGHT
-    ),
-
-    // blender animation / general
-    [5] = LAYOUT_planck_mit(
-        KC_ESC,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,     XXXXXXX,      XXXXXXX, TO(0),   XXXXXXX, XXXXXXX, XXXXXXX
-
-        /*
-            notes:
-            paste flipped poses
-            show/hide overlays toggle
-        */
     ),
 };
