@@ -18,7 +18,9 @@
 
 1. Clone [ZMK](https://zmk.dev) as `zmk`:
 
-	git clone https://github.com/zmkfirmware/zmk.git
+```
+git clone https://github.com/zmkfirmware/zmk.git
+```
 
 2. Install the dependencies for ZMK and initialise the repository according to the [documentation here](https://zmk.dev/docs/development/setup).
 
@@ -26,7 +28,9 @@
 
 4. Run the ZMK builder with the name of a board directory:
 
-	zmk/build.sh bamboo
+```
+zmk/build.sh bamboo
+```
 
 ### Build Script
 
@@ -40,17 +44,23 @@ It, very basically, simplifies the management of ZMK and `west`, loading the cor
 
 1. Clone [QMK](https://qmk.fm) as `qmk`:
 
-	git clone --recurse-submodules https://github.com/qmk/qmk_firmware.git qmk
+```
+git clone --recurse-submodules https://github.com/qmk/qmk_firmware.git qmk
+```
 
 2. Install dependencies (if needed):
 
-	qmk/util/qmk_install.sh
+```
+qmk/util/qmk_install.sh
+```
 
 3. Physically reset your keyboard.
 
 4. Link and build a keymap:
 
-	qmk/build.sh dz60:undertow
+```
+qmk/build.sh dz60:undertow
+```
 
 ### Build Script
 
@@ -58,7 +68,9 @@ It, very basically, simplifies the management of ZMK and `west`, loading the cor
 
 Using the Undertow keyboard in this repository as an example, here are the steps the script executes:
 
-	qmk/build.sh dz60:undertow
+```
+qmk/build.sh dz60:undertow
+```
 
 It then hardlinks the files in the following pattern:
 
