@@ -10,6 +10,8 @@ fi
 source zmk/zephyr/zephyr-env.sh
 PATH="$(pwd)/cmake/bin:$PATH"
 
+mkdir -p build
+
 pushd zmk/app > /dev/null
 
 west build -p -b bt60_v1 -- -DZMK_CONFIG="$(realpath ../../zmk_boards/$1)"

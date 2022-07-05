@@ -15,6 +15,8 @@ if [ ! $target ]; then
 	exit 0
 fi
 
+mkdir -p build
+
 # paths
 base_path="./qmk/keyboards/${target}"
 header_path="${base_path}/${target}.h"
