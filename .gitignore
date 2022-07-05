@@ -1,6 +1,11 @@
 *.hex
 *.exe
 *.sublime*
+*.png
+
+_*
 
 /qmk/
-/special/
+/zmk/
+/cmake/
+/build/

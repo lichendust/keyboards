@@ -10,26 +10,10 @@ enum layers {
 };
 
 enum custom_keycodes {
-    RDEL_L = SAFE_RANGE,
-    RDEL_R,
-};
-
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    switch (keycode) {
-    case RDEL_L:
-        if (record->event.pressed) {
-           SEND_STRING(SS_TAP(X_K));           // K
-           SEND_STRING(SS_TAP(X_DEL));         // Delete
-        }
-        break;
-    case RDEL_R:
-        if (record->event.pressed) {
-           SEND_STRING(SS_LSFT(SS_TAP(X_K)));  // Shift + K
-           SEND_STRING(SS_TAP(X_DEL));         // Delete
-        }
-        break;
-    }
-    return true;
+    R_DELL = SAFE_RANGE,
+    R_DELR,
+    R_RECORD,
+    R_OVERDUB,
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -49,16 +33,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     /*
         krita and aseprite are designed to match _relatively_
-        closely, mostly on the left-hand side. the center and
-        right-hand side deviate into more specific app functions
+        closely, though there is deviation into app-specifics
     */
-
     // krita
     [KRITA] = LAYOUT_planck_mit(
     //  esc      fit          rot        100%      deselect    reselect   swap c                  cut      copy       paste
         KC_ESC,  KC_3,        KC_5,      KC_1,     RCS(KC_A),  RCS(KC_D), KC_X,       XXXXXXX,    C(KC_X), C(KC_C),   C(KC_V), _______,
 
-    //  canvas   quick b      brush      eraser    freehand*   marquee    free-trans  apply                brush--    brush++  save             * freehand must be changed in program
+    //  canvas   quick b      brush      eraser    freehand*   marquee    free-trans  apply                brush--    brush++  save
         KC_TAB,  KC_PSLS,     KC_B,      KC_E,     KC_J,       C(KC_R),   C(KC_T),    KC_ENT,     XXXXXXX, KC_LBRC,   KC_RBRC, C(KC_S),
 
     //  brush s  undo         redo       mirror    layer n     layer c    layer del   clip group  group    ungroup             inc. save
@@ -66,6 +48,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     //  picker   rotate       zoom       pan
         KC_LCTL, LSA(KC_SPC), S(KC_SPC), KC_SPC,   _______,         _______,          _______,    _______, KC_LEFT,   KC_DOWN, KC_RGHT
+
+        /*
+            notes:
+            * freehand must be changed in program
+        */
     ),
 
     // aseprite
@@ -79,30 +66,43 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     //           undo     redo     bucket   layer n  cell c     cell dup  cell link group
         KC_LSFT, _______, _______, KC_G,    S(KC_N), KC_DEL,    A(KC_D),  A(KC_M),  LSA(KC_G), XXXXXXX, KC_UP,   XXXXXXX,
 
-    //  picker            zoom*    pan                                                                                      * zoom must changed to "quick zoom" in program
+    //  picker            zoom*    pan
         KC_LALT, XXXXXXX, KC_Z,    KC_SPC,  _______,      _______,        _______,  _______,   KC_LEFT, KC_DOWN, KC_RGHT
+
+        /*
+            notes:
+            * zoom must be changed to "quick zoom" in program
+        */
     ),
 
     // reaper tracking / composing
     [REAPER] = LAYOUT_planck_mit(
-    //  esc      m rec    m over
-        KC_ESC,  KC_F20,  KC_F21,  XXXXXXX,  XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,     XXXXXXX, XXXXXXX, KC_DEL,
-    //           solo     mute              glue item  split d  split    split d
-        XXXXXXX, KC_S,    KC_M,    XXXXXXX, RCS(KC_G), RDEL_L,  KC_K,    RDEL_R,  XXXXXXX,     XXXXXXX, XXXXXXX, XXXXXXX,
-    //           undo     redo
-        KC_LSFT, _______, _______, XXXXXXX, XXXXXXX,   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,     XXXXXXX, KC_UP,   XXXXXXX,
-        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,        KC_SPC,      XXXXXXX, TO(CONTROL), KC_LEFT, KC_DOWN, KC_RGHT
+    //  esc
+        KC_ESC,  XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX,   XXXXXXX,     XXXXXXX, LCA(KC_UP),   KC_BSPC,
+    //           solo     mute
+        XXXXXXX, KC_S,    KC_M,    XXXXXXX, XXXXXXX,   XXXXXXX, XXXXXXX, XXXXXXX,   XXXXXXX,     XXXXXXX, LCA(KC_DOWN), KC_DEL,
+    //           undo     redo              glue item  split d  split    split d
+        KC_LSFT, _______, _______, XXXXXXX, RCS(KC_G), R_DELL,  KC_K,    R_DELR,    XXXXXXX,     XXXXXXX, KC_UP,        XXXXXXX,
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, R_RECORD,       C(KC_R),     R_OVERDUB, TO(CONTROL), KC_LEFT, KC_DOWN,      KC_RGHT
 
         /*
             notes:
 
-            t / shift+t    >    forwards/backwards through takes
-            shift+alt+t    >    select take and forget all others
-            shift+ctrl+t   >    delete active take but keep others
+            t / shift+t     >    forwards/backwards through takes
+            shift+alt+t     >    select take and forget all others
+            shift+ctrl+t    >    delete active take but keep others
 
-            shift+ctrl+g   >    glue section in for looping, etc. (note this is actually the time-selection glue, don't use this)
+            ctrl+alt+d/u    >    select next/prev track
+                + shift     >    add to selection
 
-            looped source action > /
+            f6/f5           >    offline/online first plugin on track
+                                 need visual feedback from reaper on this, which we don't get.
+
+            alt+m           >    midi editor
+
+            shift+ctrl+g    >    glue section in for looping, etc. (note this is actually the time-selection glue, don't use this)
+
+            toggle loop     >    /
         */
     ),
 
@@ -115,8 +115,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
         /*
             notes:
-            paste flipped poses
-            show/hide overlays toggle
+            need to paste flipped poses
+            need a show/hide overlays toggle
         */
     ),
 
@@ -134,4 +134,38 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     //  ctrl     alt      zoom          pan
         KC_LCTL, KC_LALT, LCA(XXXXXXX), LSA(XXXXXXX), _______,     _______,      _______, _______, KC_LEFT, KC_DOWN, KC_RGHT
     ),
+};
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+    case R_DELL:
+        // reaper: cuts selected regions, then deletes the left side
+        if (record->event.pressed) {
+           SEND_STRING(SS_TAP(X_K));    // K
+           SEND_STRING(SS_TAP(X_BSPC)); // Backspace
+        }
+        break;
+    case R_DELR:
+        // reaper: cuts selected regions, then deletes the right side
+        if (record->event.pressed) {
+           SEND_STRING(SS_LSFT(SS_TAP(X_K))); // Shift + K
+           SEND_STRING(SS_TAP(X_BSPC));       // Backspace
+        }
+        break;
+    case R_OVERDUB:
+        // reaper: set overdub record mode, then record
+        if (record->event.pressed) {
+           SEND_STRING(SS_TAP(X_F21));        // F21
+           SEND_STRING(SS_LCTL(SS_TAP(X_R))); // Ctrl + R
+        }
+        break;
+    case R_RECORD:
+        // reaper: set regular record mode, then record
+        if (record->event.pressed) {
+           SEND_STRING(SS_TAP(X_F20));        // F20
+           SEND_STRING(SS_LCTL(SS_TAP(X_R))); // Ctrl + R
+        }
+        break;
+    }
+    return true;
 };

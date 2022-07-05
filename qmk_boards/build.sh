@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 regex() {
 	[[ $1 =~ $2 ]] && echo "${BASH_REMATCH[1]}"
 }
@@ -26,38 +28,27 @@ if ! test -f "$header_path"; then
 fi
 
 # link files if they exist
-if test -f "keymaps/${keymap}.c"; then
+if test -f "qmk_boards/${keymap}.c"; then
 	mkdir -p "${keymap_path}"
-	ln -f "keymaps/${keymap}.c" "${keymap_path}/keymap.c"
-
-	echo "Linked ${keymap}.c"
-else
-	echo "No ${keymap}.c found - not linked"
+	ln -f "qmk_boards/${keymap}.c" "${keymap_path}/keymap.c"
 fi
 
-if test -f "keymaps/${keymap}.h"; then
-	ln -f "keymaps/${keymap}.h" "${header_path}"
-
-	echo "Linked ${keymap}.h"
-else
-	echo "No ${keymap}.h found - not linked"
+if test -f "qmk_boards/${keymap}.h"; then
+	ln -f "qmk_boards/${keymap}.h" "${header_path}"
 fi
 
-if test -f "keymaps/${keymap}.mk"; then
-	ln -f "keymaps/${keymap}.mk" "${rules_path}"
-
-	echo "Linked ${keymap}.mk"
-else
-	echo "No ${keymap}.mk found - not linked"
+if test -f "qmk_boards/${keymap}.mk"; then
+	ln -f "qmk_boards/${keymap}.mk" "${rules_path}"
 fi
-
-echo
 
 # make firmware
 pushd qmk > /dev/null
 echo "Compiling ${keymap}..."
 make "$1"
 popd > /dev/null
+
+# copy the final to the build folder
+mv qmk/${target}_${keymap}.hex build/${keymap}.hex
 
 # if [ $2 ] && [ $2 = "flash" ]; then
 	# dfu-programmer atmega32u4 erase --force && \
