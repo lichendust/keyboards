@@ -1,95 +1,69 @@
 # ⌨️ Keyboards
 
-<!-- MarkdownTOC autolink="true" -->
+This is the repository for my keyboards, like the Undertow and the Wanderer, as well as a handful of macro pads.  The bigger boards both have custom pin layouts and complicated keymaps, so this repository is designed to streamline their management.
 
-- [ZMK](#zmk)
-	- [Quick Start](#quick-start)
-	- [Build Script](#build-script)
-- [QMK](#qmk)
-	- [Quick Start](#quick-start-1)
-	- [Build Script](#build-script-1)
-	- [Windows](#windows)
+## Contents
 
-<!-- /MarkdownTOC -->
+### Main Boards
 
-## ZMK
+#### Wanderer
 
-### Quick Start
-
-1. Clone [ZMK](https://zmk.dev) as `zmk`:
+A Polarity Works BT60 V2 board in a bamboo case, an evolution of the Undertow.
 
 ```
-git clone https://github.com/zmkfirmware/zmk.git
+zmk/build.sh bt60:wanderer
 ```
 
-2. Install the dependencies for ZMK and initialise the repository according to the [documentation here](https://zmk.dev/docs/development/setup).
+#### Undertow
 
-3. Clone/download a version of CMake 3.20+ as `cmake` alongside the new `zmk` directory.
-
-4. Run the ZMK builder with the name of a board directory:
-
-```
-zmk/build.sh bamboo
-```
-
-### Build Script
-
-The build script for ZMK is much simpler than the QMK version.  Right now, unlike QMK, it can't build boards that ship with ZMK, it's hardcoded for local config directories.
-
-It, very basically, simplifies the management of ZMK and `west`, loading the correct, local version of CMake, importing the ZMK environment variables, building the specified layout and outputting it to a `build` directory (ZMK buries the outputted firmware in its folder structure for some reason).
-
-## QMK
-
-### Quick Start
-
-1. Clone [QMK](https://qmk.fm) as `qmk`:
-
-```
-git clone --recurse-submodules https://github.com/qmk/qmk_firmware.git qmk
-```
-
-2. Install dependencies (if needed):
-
-```
-qmk/util/qmk_install.sh
-```
-
-3. Physically reset your keyboard.
-
-4. Link and build a keymap:
+A DZ60 board in a walnut case.
 
 ```
 qmk/build.sh dz60:undertow
 ```
 
-### Build Script
+### Macro Pads
 
-`qmk.sh` wraps the QMK compile step and automatically flashes an eligible connected keyboard.  The goal here is to minimise interaction with the enormous QMK repository and file structure, by simply managing *your* keymaps outside of it.  If you want to submit PRs for boards or keymaps.
+#### ROTR
 
-Using the Undertow keyboard in this repository as an example, here are the steps the script executes:
-
-```
-qmk/build.sh dz60:undertow
-```
-
-It then hardlinks the files in the following pattern:
+A beautiful magnetic encoder-based macro pad, also from Polarity Works.
 
 ```
-keymaps/undertow.c  -> qmk/keyboards/dz60/keymaps/undertow/keymap.c
-keymaps/undertow.h  -> qmk/keyboards/dz60/dz60.h
-keymaps/undertow.mk -> qmk/keyboards/dz60/rules.mk
+zmk/build.sh rotr:rotr
 ```
 
-Any directories that do not exist already are created, but the script _will_ exit if the model is not found in the `keyboards` directory.  This prevents useless files from being written into the repository in the event of a typo, a hard-learned lesson from when I wrote the script.
+#### JBoK
 
-If the script finds no matching local files, it will simply compile and/or flash a keymap that ships with QMK.
+"Just a Bunch of Keys"; A Planck-clone Niu Mini from KBDFans that I use as a giant macro pad.  Semi-deprecated because the Wanderer is essentially the result of smashing this board together with the Undertow.
 
-### Windows
+```
+qmk/build.sh niu_mini:jbok
+```
 
-There are some lines related to DFU Programmer in `qmk.sh`
+### Other
 
-The `flash` argument on the end of the command is optional and _disabled_ by default due to `dfu-programmer` not working (for me) on Windows.
+#### Sven
 
-Using QMK Toolbox is the solution, it seems, on Windows.
+Sven is an ortholinear 75 board that's chilling in a cupboard.
 
-This script works great on Mac but is untested on Linux.
+```
+qmk/build.sh idobo:sven
+```
+
+## Usage
+
+As you seen above, you can build any board in this repository using the firmware-appropriate build scripts, sharing a common syntax:
+
+```
+zmk_boards/build.sh bt60:wanderer
+qmk_boards/build.sh dz60:undertow
+```
+
+The final firmware will be saved to a top-level `build` directory, named according to the second part of the argument:
+
+```
+build/wanderer.uf2
+build/undertow.hex
+```
+
+You'll need to set up all dependencies for each firmware, which is explained (or assisted by) the scripts and docs in each directory.

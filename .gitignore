@@ -1,11 +1,20 @@
 *.hex
+*.uf2
 *.exe
 *.sublime*
 *.png
 
 _*
 
-/qmk/
-/zmk/
-/cmake/
 /build/
+
+/qmk/firmware/
+
+zmk/*
+!zmk/*/
+
+zmk/*/*
+!zmk/*/config
+
+!zmk/*.sh
+!zmk/*.md

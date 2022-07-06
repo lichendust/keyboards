@@ -2,6 +2,11 @@
 
 set -e
 
+if [ -z $1 ]; then
+	echo "please specify a board"
+	exit 1;
+fi
+
 regex() {
 	[[ $1 =~ $2 ]] && echo "${BASH_REMATCH[1]}"
 }
@@ -10,15 +15,8 @@ regex() {
 target=$(regex $1 '^(.*):.*$')
 keymap=$(regex $1 '^.*:(.*)$')
 
-if [ ! $target ]; then
-	echo 'Invalid argument given'
-	exit 0
-fi
-
-mkdir -p build
-
 # paths
-base_path="./qmk/keyboards/${target}"
+base_path="qmk/firmware/keyboards/${target}"
 header_path="${base_path}/${target}.h"
 keymap_path="${base_path}/keymaps/${keymap}"
 rules_path="${base_path}/rules.mk"
@@ -30,27 +28,27 @@ if ! test -f "$header_path"; then
 fi
 
 # link files if they exist
-if test -f "qmk_boards/${keymap}.c"; then
+if test -f "qmk/${keymap}.c"; then
 	mkdir -p "${keymap_path}"
-	ln -f "qmk_boards/${keymap}.c" "${keymap_path}/keymap.c"
+	ln -f "qmk/${keymap}.c" "${keymap_path}/keymap.c"
 fi
 
-if test -f "qmk_boards/${keymap}.h"; then
-	ln -f "qmk_boards/${keymap}.h" "${header_path}"
+if test -f "qmk/${keymap}.h"; then
+	ln -f "qmk/${keymap}.h" "${header_path}"
 fi
 
-if test -f "qmk_boards/${keymap}.mk"; then
-	ln -f "qmk_boards/${keymap}.mk" "${rules_path}"
+if test -f "qmk/${keymap}.mk"; then
+	ln -f "qmk/${keymap}.mk" "${rules_path}"
 fi
 
-# make firmware
-pushd qmk > /dev/null
-echo "Compiling ${keymap}..."
+# move into the firmware folder and build
+pushd qmk/firmware > /dev/null
 make "$1"
 popd > /dev/null
 
-# copy the final to the build folder
-mv qmk/${target}_${keymap}.hex build/${keymap}.hex
+# grab the compiled firmware out
+mkdir -p build
+mv qmk/firmware/${target}_${keymap}.hex build/${keymap}.hex
 
 # if [ $2 ] && [ $2 = "flash" ]; then
 	# dfu-programmer atmega32u4 erase --force && \
