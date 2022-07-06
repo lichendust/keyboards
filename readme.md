@@ -55,8 +55,8 @@ qmk/build.sh idobo:sven
 As you seen above, you can build any board in this repository using the firmware-appropriate build scripts, sharing a common syntax:
 
 ```
-zmk_boards/build.sh bt60:wanderer
-qmk_boards/build.sh dz60:undertow
+zmk/build.sh bt60:wanderer
+qmk/build.sh dz60:undertow
 ```
 
 The final firmware will be saved to a top-level `build` directory, named according to the second part of the argument:
