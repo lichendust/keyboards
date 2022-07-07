@@ -1,8 +1,8 @@
 *.hex
 *.uf2
 *.exe
-*.sublime*
 *.png
+*.sublime*
 
 _*
 
@@ -10,11 +10,9 @@ _*
 
 /qmk/firmware/
 
-zmk/*
-!zmk/*/
-
-zmk/*/*
-!zmk/*/config
-
-!zmk/*.sh
-!zmk/*.md
+/zmk/cmake/
+/zmk/*/.west/
+/zmk/*/build/
+/zmk/*/modules/
+/zmk/*/zephyr/
+/zmk/*/zmk/
