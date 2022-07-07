@@ -27,3 +27,4 @@ popd > /dev/null
 # grab the compiled firmware out
 mkdir -p build
 mv zmk/$keymap/build/zephyr/zmk.uf2 build/$keymap.uf2
+echo "output to build/$keymap.uf2"

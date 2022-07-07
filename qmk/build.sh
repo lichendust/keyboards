@@ -48,7 +48,8 @@ popd > /dev/null
 
 # grab the compiled firmware out
 mkdir -p build
-mv qmk/firmware/${target}_${keymap}.hex build/${keymap}.hex
+mv qmk/firmware/${target}_${keymap}.hex build/$keymap.hex
+echo "output to build/$keymap.hex"
 
 # if [ $2 ] && [ $2 = "flash" ]; then
 	# dfu-programmer atmega32u4 erase --force && \
