@@ -1,5 +1,9 @@
 # Wanderer
 
+## Layout
+
+The Wanderer uses a custom layout, which has been defined within the ZMK matrix in `config/board/arm/bt60.dts`.
+
 ## BOM
 
 + BT60 V2 PCB from Polarity Works
