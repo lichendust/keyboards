@@ -3,29 +3,37 @@
 #include <dt-bindings/zmk/rgb.h>
 #include <dt-bindings/zmk/bt.h>
 
+/ {
+    behaviors {
+        inc_dec_precise: behavior_sensor_rotate_key_press_2 {
+            compatible = "zmk,behavior-sensor-rotate-key-press";
+            label = "ENC_KEY_PRESS_2";
+            triggers-per-rotation = <256>;
+            #sensor-binding-cells = <2>;
+        };
+    };
+};
+
 &inc_dec_kp {
 	triggers-per-rotation = <64>;
 };
 &def_lshft {
-	triggers-per-rotation = <4>;
+	triggers-per-rotation = <8>;
 };
 
 / {
 	keymap {
 		compatible = "zmk,keymap";
 		default_layer {
-			bindings = <&kp LEFT &lt 3 F12 &kp RIGHT>;
+			bindings = <&kp LEFT &lt 2 F12 &kp C_PP>;
 			sensor-bindings = <&inc_dec_kp RIGHT LEFT>;
 		};
 		one {
-			bindings = <&kp C_PREV &lt 3 C_PP &kp C_NEXT>;
-			sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
-		};
-		two {
-			bindings = <&kp C_MUTE &lt 3 F12 &bootloader>;
+			bindings = <&kp LEFT &lt 2 F12 &kp C_PP>;
+			sensor-bindings = <&inc_dec_precise RIGHT LEFT>;
 		};
 		shift {
-			bindings = <&bt BT_CLR &trans &rgb_ug RGB_TOG>;
+			bindings = <&bt BT_CLR &trans &bootloader>;
 			sensor-bindings = <&def_lshft>;
 		};
 	};
