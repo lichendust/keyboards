@@ -25,11 +25,11 @@
 	keymap {
 		compatible = "zmk,keymap";
 		default_layer {
-			bindings = <&kp LEFT &lt 2 F12 &kp C_PP>;
+			bindings = <&kp C_REC &lt 2 F12 &kp C_PP>;
 			sensor-bindings = <&inc_dec_kp RIGHT LEFT>;
 		};
 		one {
-			bindings = <&kp LEFT &lt 2 F12 &kp C_PP>;
+			bindings = <&kp C_REC &lt 2 F12 &kp C_PP>;
 			sensor-bindings = <&inc_dec_precise RIGHT LEFT>;
 		};
 		shift {
