@@ -4,37 +4,54 @@
 #include <dt-bindings/zmk/rgb.h>
 #include <dt-bindings/zmk/backlight.h>
 
-#define RESET __COUNTER__
+#define BASE 0
 
-#define KRI   __COUNTER__
-#define ASE   __COUNTER__
-#define REA   __COUNTER__
-#define BL1   __COUNTER__
+#define KRI 1
+// #define ASE 2
+// #define REA 3
+// #define BL1 4
 
-#define FUNC  __COUNTER__
-#define NUM   __COUNTER__
+#define FUNC 2
+#define NUM  3
 
 / {
 	keymap {
 		compatible = "zmk,keymap";
+
 		default_layer {
 			bindings = <
 				&kp ESC      &kp N1     &kp N2  &kp N3  &kp N4  &kp N5  &kp N6  &kp N7  &kp N8  &kp N9     &kp N0    &kp MINUS  &kp EQUAL             &kp BSPC
 				&lt NUM TAB  &kp Q      &kp W   &kp E   &kp R   &kp T   &kp Y   &kp U   &kp I   &kp O      &kp P     &kp LBKT   &kp RBKT
 				&mo FUNC     &kp A      &kp S   &kp D   &kp F   &kp G   &kp H   &kp J   &kp K   &kp L      &kp SEMI  &kp SQT    &kp BSLH              &kp RET
 				&kp LSHFT    &kp GRAVE  &kp Z   &kp X   &kp C   &kp V   &kp B   &kp N   &kp M   &kp COMMA  &kp DOT   &kp FSLH   &kp KP_DOT  &kp UP    &kp RSHFT
-				&kp LGUI     &kp LGUI   &kp LALT                        &kp SPACE                          &none     &none      &kp LEFT    &kp DOWN  &kp RIGHT
+				&kp LGUI     &kp LALT   &kp LCTRL                       &kp SPACE                          &mo FUNC  &none      &kp LEFT    &kp DOWN  &kp RIGHT
 			>;
 		};
+
+		krita {
+			bindings = <
+			//  esc                fit            rot        100%                                                               fullscreen
+				&trans             &kp N3         &kp N5     &kp N1      &none  &none  &none  &none  &none  &none     &none     &kp LS(LC(F))  &none             &trans
+			//                     quick brush    brush      eraser                                                             brush ++       brush --
+				&trans             &kp KP_SLASH   &kp B      &kp E       &none  &none  &none  &none  &none  &none     &none     &trans         &trans
+				&trans             &none          &none      &none       &none  &none  &none  &none  &none  &none     &none     &none          &kp LC(S)         &trans
+			//  brush s                           undo       redo
+				&trans             &none          &kp LC(Z)  &LS(LC(Z))  &none  &none  &none  &none  &none  &none     &none     &none          &none      &none  &none
+			//  rotate             zoom           picker                               panning
+				&kp LS(LA(SPACE))  &kp LS(SPACE)  &trans                               &none                          &to BASE  &none          &none      &none  &none
+			>;
+		};
+
 		function {
 			bindings = <
-				&bootloader  &trans        &trans      &trans        &trans  &trans  &trans    &trans     &trans    &trans     &trans   &trans  &trans          &kp DEL
-				&trans       &kp C_PREV    &kp C_PP    &kp C_NEXT    &trans  &trans  &trans    &kp PG_UP  &kp UP    &kp PG_DN  &trans   &trans  &trans
-				&trans       &kp C_VOL_DN  &kp C_MUTE  &kp C_VOL_UP  &trans  &trans  &kp HOME  &kp RIGHT  &kp DOWN  &kp LEFT   &kp INS  &trans  &trans          &trans
-				&trans       &trans        &trans      &trans        &trans  &trans  &kp END   &trans     &trans    &trans     &trans   &trans  &trans  &trans  &trans
-				&trans       &trans        &trans                                    &trans                                    &trans   &trans  &trans  &trans  &trans
+				&bootloader  &kp F1        &kp F2      &kp F3        &kp F4  &kp F5  &kp F6    &kp F7     &kp F8    &kp F9     &kp F10  &kp F11  &kp F12         &kp DEL
+				&trans       &kp C_PREV    &kp C_PP    &kp C_NEXT    &trans  &trans  &trans    &kp PG_UP  &kp UP    &kp PG_DN  &trans   &trans   &trans
+				&trans       &kp C_VOL_DN  &kp C_MUTE  &kp C_VOL_UP  &trans  &trans  &kp HOME  &kp LEFT   &kp DOWN  &kp RIGHT  &kp INS  &trans   &trans          &trans
+				&trans       &trans        &trans      &trans        &trans  &trans  &trans    &kp END   &trans     &trans     &trans   &trans   &trans  &trans  &trans
+				&trans       &trans        &trans                                    &trans                                    &trans   &to KRI  &trans  &trans  &trans
 			>;
 		};
+
 		numpad {
 			bindings = <
 				&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans          &kp LS(KP_N9)  &kp LS(KP_N0)  &kp KP_MINUS  &kp KP_PLUS      &trans
