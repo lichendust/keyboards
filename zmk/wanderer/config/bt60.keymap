@@ -48,8 +48,8 @@
 			bindings = <
 				&trans &none &none &none &none &none &none &none &none &none &none &none &none &trans
 				&trans &none &none &none &rea_rec &rea_over &none &none &none &none &none &none &none
-				&trans &kp A &kp S &kp M &none &kp LS(LC(G)) &kp LA(LC(UP)) &rea_del_l &kp K &rea_del_r &none &none &kp LC(S) &trans
-				&trans &kp LS(LC(Z)) &kp LC(Z) &none &none &none &none &kp LA(LC(DOWN)) &kp LC(M) &kp LA(M) &none &kp FSLH &kp DEL &trans &none
+				&trans &trans &trans &trans &trans &kp LS(LC(G)) &kp LA(LC(UP)) &rea_del_l &kp K &rea_del_r &none &none &kp LC(S) &trans
+				&trans &kp LS(LC(Z)) &kp LC(Z) &kp M &none &none &none &kp LA(LC(DOWN)) &kp LC(M) &kp LA(M) &none &kp FSLH &kp DEL &trans &none
 				&trans &trans &trans &trans &to BASE &trans &trans &trans &trans
 			>;
 		};
