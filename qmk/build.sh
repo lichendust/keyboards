@@ -23,7 +23,7 @@ rules_path="${base_path}/rules.mk"
 
 # check if target model is valid in QMK
 if ! test -f "$header_path"; then
-	echo "Target keyboard \"${target}\" has no QMK definition"
+	echo "target keyboard \"${target}\" has no QMK definition"
 	exit 0
 fi
 
@@ -48,11 +48,13 @@ popd > /dev/null
 
 # grab the compiled firmware out
 mkdir -p build
-mv qmk/firmware/${target}_${keymap}.hex build/$keymap.hex
+mv qmk/firmware/${target}_${keymap}.hex build/${keymap}.hex
 echo "output to build/$keymap.hex"
 
-# if [ $2 ] && [ $2 = "flash" ]; then
-	# dfu-programmer atmega32u4 erase --force && \
-	# dfu-programmer atmega32u4 flash "qmk/${target}_${keymap}.hex" && \
-	# dfu-programmer atmega32u4 reset
-# fi
+# if the "flash" argument is added
+# use dfu-programmer to directly do so
+if ! [ -z $2 ] && [ $2 = "flash" ]; then
+	dfu-programmer atmega32u4 erase --force && \
+	dfu-programmer atmega32u4 flash "build/${keymap}.hex" && \
+	dfu-programmer atmega32u4 reset
+fi
