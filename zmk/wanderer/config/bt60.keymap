@@ -1,14 +1,16 @@
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/keys.h>
 
-#define BASE 0
+#define BASE     0
+#define KRITA    1
+#define ASEPRITE 2
+#define REAPER   3
+#define FUNCTION 4
+#define NUMPAD   5
 
-#define KRI 1
-#define ASE 2
-#define REA 3
-
-#define FUNC 4
-#define NUM  5
+&lt {
+    tapping-term-ms = <30>;
+};
 
 / {
     keymap {
@@ -16,10 +18,10 @@
         default_layer {
             bindings = <
                 &kp ESC &kp N1 &kp N2 &kp N3 &kp N4 &kp N5 &kp N6 &kp N7 &kp N8 &kp N9 &kp N0 &kp MINUS &kp EQUAL &kp BSPC
-                &lt NUM TAB &kp Q &kp W &kp E &kp R &kp T &kp Y &kp U &kp I &kp O &kp P &kp LBKT &kp RBKT
-                &mo FUNC &kp A &kp S &kp D &kp F &kp G &kp H &kp J &kp K &kp L &kp SEMI &kp SQT &kp BSLH &kp RET
+                &lt NUMPAD TAB &kp Q &kp W &kp E &kp R &kp T &kp Y &kp U &kp I &kp O &kp P &kp LBKT &kp RBKT
+                &lt FUNCTION CAPS &kp A &kp S &kp D &kp F &kp G &kp H &kp J &kp K &kp L &kp SEMI &kp SQT &kp BSLH &kp RET
                 &kp LSHFT &kp GRAVE &kp Z &kp X &kp C &kp V &kp B &kp N &kp M &kp COMMA &kp DOT &kp FSLH &kp KP_DOT &kp UP &kp RSHFT
-                &kp LGUI &kp LALT &kp LCTRL &kp SPACE &mo FUNC &kp C_PP &kp LEFT &kp DOWN &kp RIGHT
+                &kp LGUI &kp LALT &kp LCTRL &kp SPACE &mo FUNCTION &kp C_PP &kp LEFT &kp DOWN &kp RIGHT
             >;
         };
         krita {
@@ -55,7 +57,7 @@
                 &trans &kp C_PREV &kp C_PP &kp C_NEXT &trans &trans &trans &kp PG_UP &kp UP &kp PG_DN &trans &trans &trans
                 &trans &kp C_VOL_DN &kp C_MUTE &kp C_VOL_UP &trans &trans &kp HOME &kp LEFT &kp DOWN &kp RIGHT &kp INS &trans &bootloader &trans
                 &trans &trans &trans &trans &trans &trans &trans &kp END &trans &trans &trans &trans &trans &trans &trans
-                &trans &trans &trans &trans &trans &to KRI &to ASE &to REA &trans
+                &trans &trans &trans &trans &trans &to KRITA &to ASEPRITE &to REAPER &trans
             >;
         };
         numpad {
