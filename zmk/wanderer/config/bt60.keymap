@@ -30,7 +30,7 @@
                 &trans &kp KP_SLASH &kp B &kp E &none &kp LC(T) &kp LS(LC(A)) &kp LS(LC(D)) &none &none &none &trans &trans
                 &trans &none &none &kp LC(R) &kp J &kp LC(G) &kp LS(LC(G)) &kp LA(LC(G)) &none &none &none &kp LA(LC(S)) &kp LC(S) &trans
                 &trans &kp LS(LC(Z)) &kp LC(Z) &kp X &kp LC(C) &kp LC(V) &none &kp INS &trans &kp DEL &kp LS(DEL) &none &none &trans &none
-                &kp LS(LA(SPACE)) &kp LS(SPACE) &trans &trans &to BASE &trans &trans &trans &trans
+                &kp LS(SPACE) &kp LC(SPACE) &trans &trans &to BASE &trans &trans &trans &trans
             >;
         };
         aseprite {
