@@ -7,6 +7,7 @@
 #define REAPER   3
 #define FUNCTION 4
 #define NUMPAD   5
+#define LAYERS   6
 
 / {
     keymap {
@@ -17,7 +18,7 @@
                 &lt NUMPAD TAB &kp Q &kp W &kp E &kp R &kp T &kp Y &kp U &kp I &kp O &kp P &kp LBKT &kp RBKT
                 &mo FUNCTION &kp A &kp S &kp D &kp F &kp G &kp H &kp J &kp K &kp L &kp SEMI &kp SQT &kp BSLH &kp RET
                 &kp LSHFT &kp GRAVE &kp Z &kp X &kp C &kp V &kp B &kp N &kp M &kp COMMA &kp DOT &kp FSLH &kp KP_DOT &kp UP &kp RSHFT
-                &kp LGUI &kp LALT &kp LCTRL &kp SPACE &mo FUNCTION &kp C_PP &kp LEFT &kp DOWN &kp RIGHT
+                &kp LGUI &kp LALT &kp LCTRL &kp SPACE &mo LAYERS &kp C_PP &kp LEFT &kp DOWN &kp RIGHT
             >;
         };
         krita {
@@ -25,7 +26,7 @@
                 &trans &kp N3 &kp N5 &kp N1 &none &none &none &none &none &none &none &kp LS(LC(F)) &none &trans
                 &trans &kp KP_SLASH &kp B &kp E &none &kp LC(T) &kp LS(LC(A)) &kp LS(LC(D)) &none &none &none &trans &trans
                 &trans &none &none &kp LC(R) &kp J &kp LC(G) &kp LS(LC(G)) &kp LA(LC(G)) &none &none &none &kp LA(LC(S)) &kp LC(S) &trans
-                &trans &kp LS(LC(Z)) &kp LC(Z) &kp X &kp LC(C) &kp LC(V) &none &kp INS &trans &kp DEL &kp LS(DEL) &none &none &trans &none
+                &trans &kp LS(LC(Z)) &kp LC(Z) &kp X &kp LC(C) &kp LC(V) &none &kp INS &trans &none &none &kp DEL &kp LS(DEL) &trans &none
                 &kp LS(SPACE) &kp LC(SPACE) &trans &trans &to BASE &trans &trans &trans &trans
             >;
         };
@@ -53,7 +54,7 @@
                 &trans &kp C_PREV &kp C_PP &kp C_NEXT &trans &trans &trans &kp PG_UP &kp UP &kp PG_DN &trans &trans &trans
                 &trans &kp C_VOL_DN &kp C_MUTE &kp C_VOL_UP &trans &trans &kp HOME &kp LEFT &kp DOWN &kp RIGHT &kp INS &trans &bootloader &trans
                 &trans &trans &trans &trans &trans &trans &trans &kp END &trans &trans &trans &trans &trans &trans &trans
-                &trans &trans &trans &trans &trans &to KRITA &to ASEPRITE &to REAPER &trans
+                &trans &trans &trans &trans &trans &trans &trans &trans &trans
             >;
         };
         numpad {
@@ -63,6 +64,15 @@
                 &trans &trans &trans &trans &trans &trans &trans &trans &trans &kp KP_N4 &kp KP_N5 &kp KP_N6 &kp KP_DIVIDE &trans
                 &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &kp KP_N1 &kp KP_N2 &kp KP_N3 &trans &trans
                 &trans &trans &trans &trans &trans &kp KP_N0 &trans &trans &trans
+            >;
+        };
+        layer_controls {
+            bindings = <
+                &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+                &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+                &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+                &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+                &trans &trans &trans &trans &trans &to KRITA &to ASEPRITE &to REAPER &trans
             >;
         };
     };
