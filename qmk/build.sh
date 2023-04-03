@@ -17,12 +17,11 @@ keymap=$(regex $1 '^.*:(.*)$')
 
 # paths
 base_path="qmk/firmware/keyboards/${target}"
-header_path="${base_path}/${target}.h"
 keymap_path="${base_path}/keymaps/${keymap}"
-rules_path="${base_path}/rules.mk"
+rules_path="${keymap_path}/rules.mk"
 
 # check if target model is valid in QMK
-if ! test -f "$header_path"; then
+if ! test -f "${base_path}/info.json"; then
 	echo "target keyboard \"${target}\" has no QMK definition"
 	exit 0
 fi
@@ -31,10 +30,6 @@ fi
 if test -f "qmk/${keymap}.c"; then
 	mkdir -p "${keymap_path}"
 	ln -f "qmk/${keymap}.c" "${keymap_path}/keymap.c"
-fi
-
-if test -f "qmk/${keymap}.h"; then
-	ln -f "qmk/${keymap}.h" "${header_path}"
 fi
 
 if test -f "qmk/${keymap}.mk"; then
