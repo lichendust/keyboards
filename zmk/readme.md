@@ -8,15 +8,15 @@
 
 3. Initialise all the ZMK nonsense using the `init` script for each board you want to build:
 
-```
-zmk/init.sh wanderer
-```
+	zmk/init.sh wanderer
 
 (Prepare to wait for an alarming amount of time for some keyboard firmware to install literal gigabytes of dependencies).
 
 4. Build the firmware using `zmk/build.sh` from the top-level directory.
 
 ## Build Script
+
+	zmk/build.sh bt60:wanderer
 
 The build script for ZMK is much simpler than the QMK version.  Right now, unlike QMK, it can't build boards that ship with ZMK, it's hardcoded for local config directories.
 
