@@ -18,3 +18,9 @@ I also frequently build boards for friends:
 
 - `qmk/milo`
 - `zmk/candy`
+
+## Docs
+
+To create a new orphaned branch, use:
+
+	git switch --orphan qmk/xxx
