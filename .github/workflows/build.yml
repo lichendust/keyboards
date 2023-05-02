@@ -41,4 +41,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: firmware
-          path: candy.uf2
+          path: bt60.uf2
