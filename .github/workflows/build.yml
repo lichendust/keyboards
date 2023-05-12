@@ -8,9 +8,11 @@ jobs:
     name: Build
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
+      # - name: Insert custom underglow code
+        # run: cp override/rgb_underglow.c zmk/app/src/
       - name: Cache West modules
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         env:
           cache-name: cache-zephyr-modules
         with:
@@ -23,16 +25,14 @@ jobs:
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('manifest-dir/west.yml') }}
           restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
+            ${{ runner.os }}-build
+-            ${{ runner.os }}-
       - name: West Init
         run: west init -l config
       - name: West Update
         run: west update
       - name: West Zephyr export
         run: west zephyr-export
-      - name: Insert custom underglow code
-        run: cp override/rgb_underglow.c zmk/app/src/
       - name: West Build
         run: west build -s zmk/app -b rotr -- -DZMK_CONFIG="${GITHUB_WORKSPACE}/config"
       - name: ROTR Kconfig file

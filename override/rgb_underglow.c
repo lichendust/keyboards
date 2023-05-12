@@ -4,20 +4,21 @@
  * SPDX-License-Identifier: MIT
  */
 
-#include <zephyr/device.h>
-#include <zephyr/init.h>
-#include <zephyr/kernel.h>
-#include <zephyr/settings/settings.h>
+#include <device.h>
+#include <init.h>
+#include <kernel.h>
+#include <settings/settings.h>
 
 #include <math.h>
 #include <stdlib.h>
 
-#include <zephyr/logging/log.h>
+#include <logging/log.h>
 
-#include <zephyr/drivers/led_strip.h>
+#include <drivers/led_strip.h>
 #include <drivers/ext_power.h>
 
 #include <zmk/rgb_underglow.h>
+#include <zmk/keymap.h>
 
 #include <zmk/activity.h>
 #include <zmk/usb.h>
@@ -27,14 +28,8 @@
 
 LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 
-#if !DT_HAS_CHOSEN(zmk_underglow)
-
-#error "A zmk,underglow chosen node must be declared"
-
-#endif
-
-#define STRIP_CHOSEN DT_CHOSEN(zmk_underglow)
-#define STRIP_NUM_PIXELS DT_PROP(STRIP_CHOSEN, chain_length)
+#define STRIP_LABEL DT_LABEL(DT_CHOSEN(zmk_underglow))
+#define STRIP_NUM_PIXELS DT_PROP(DT_CHOSEN(zmk_underglow), chain_length)
 
 #define HUE_MAX 360
 #define SAT_MAX 100
@@ -48,6 +43,7 @@ enum rgb_underglow_effect {
     UNDERGLOW_EFFECT_BREATHE,
     UNDERGLOW_EFFECT_SPECTRUM,
     UNDERGLOW_EFFECT_SWIRL,
+    UNDERGLOW_EFFECT_DEFAULTLAYER,
     UNDERGLOW_EFFECT_NUMBER // Used to track number of underglow effects
 };
 
@@ -81,15 +77,15 @@ static struct zmk_led_hsb hsb_scale_zero_max(struct zmk_led_hsb hsb) {
 }
 
 static struct led_rgb hsb_to_rgb(struct zmk_led_hsb hsb) {
-    float r, g, b;
+    double r, g, b;
 
     uint8_t i = hsb.h / 60;
-    float v = hsb.b / ((float)BRT_MAX);
-    float s = hsb.s / ((float)SAT_MAX);
-    float f = hsb.h / ((float)HUE_MAX) * 6 - i;
-    float p = v * (1 - s);
-    float q = v * (1 - f * s);
-    float t = v * (1 - (1 - f) * s);
+    double v = hsb.b / ((float)BRT_MAX);
+    double s = hsb.s / ((float)SAT_MAX);
+    double f = hsb.h / ((float)HUE_MAX) * 6 - i;
+    double p = v * (1 - s);
+    double q = v * (1 - f * s);
+    double t = v * (1 - (1 - f) * s);
 
     switch (i % 6) {
     case 0:
@@ -129,43 +125,9 @@ static struct led_rgb hsb_to_rgb(struct zmk_led_hsb hsb) {
     return rgb;
 }
 
-/*
-    @note qxoko
-    this function is modified to provide per-layer underglow
-    when switching layers, and off at all other times
-*/
 static void zmk_rgb_underglow_effect_solid() {
-    struct led_rgb rgb;
-
-    if (zmk_keymap_layer_active(2)) {
-        switch (zmk_keymap_layer_default()) {
-        case 0:
-            rgb.r = 10;
-            rgb.g = 147;
-            rgb.b = 150;
-            break;
-        case 1:
-            rgb.r = 202;
-            rgb.g = 103;
-            rgb.b = 2;
-            break;
-        case 2:
-            rgb.r = 0;
-            rgb.g = 0;
-            rgb.b = 255;
-            break;
-        case 3:
-            rgb.r = 255;
-            rgb.g = 255;
-            rgb.b = 0;
-            break;
-        default:
-            break;
-        }
-    }
-
     for (int i = 0; i < STRIP_NUM_PIXELS; i++) {
-        pixels[i] = rgb;
+        pixels[i] = hsb_to_rgb(hsb_scale_min_max(state.color));
     }
 }
 
@@ -208,6 +170,66 @@ static void zmk_rgb_underglow_effect_swirl() {
     state.animation_step = state.animation_step % HUE_MAX;
 }
 
+static void zmk_rgb_underglow_effect_layer_default() {
+    struct led_rgb rgb;
+    uint8_t layer = zmk_keymap_layer_default();
+    const struct zmk_keymap_led_config *led_config = zmk_keymap_get_led_config(layer);
+    if (led_config->override) {
+        rgb.r = led_config->r;
+        rgb.g = led_config->g;
+        rgb.b = led_config->b;
+    }
+    else {
+        switch (zmk_keymap_layer_default()) {
+        case 0:
+            rgb.r = 255;
+            rgb.g = 0;
+            rgb.b = 0;
+            break;
+        case 1:
+            rgb.r = 0;
+            rgb.g = 255;
+            rgb.b = 0;
+            break;
+        case 2:
+            rgb.r = 0;
+            rgb.g = 0;
+            rgb.b = 255;
+            break;
+        case 3:
+            rgb.r = 255;
+            rgb.g = 255;
+            rgb.b = 0;
+            break;
+        case 4:
+            rgb.r = 0;
+            rgb.g = 255;
+            rgb.b = 255;
+            break;
+        case 5:
+            rgb.r = 255;
+            rgb.g = 0;
+            rgb.b = 255;
+            break;
+        default:
+            break;
+        }
+    }
+    #if IS_ENABLED(CONFIG_ZMK_RGB_UNDERGLOW_LAYER_ON)
+    char *name = zmk_keymap_layer_label(zmk_keymap_highest_layer_active());
+        if(!strcmp(name,"shift") && !state.on) {
+            zmk_rgb_underglow_on();
+        }
+        else if(strcmp(name,"shift") && state.on){
+            zmk_rgb_underglow_off();
+        }
+    #endif
+    if(state.on)
+        for (int i = 0; i < STRIP_NUM_PIXELS; i++) {
+            pixels[i] = rgb;
+        }
+}
+
 static void zmk_rgb_underglow_tick(struct k_work *work) {
     switch (state.current_effect) {
     case UNDERGLOW_EFFECT_SOLID:
@@ -222,21 +244,17 @@ static void zmk_rgb_underglow_tick(struct k_work *work) {
     case UNDERGLOW_EFFECT_SWIRL:
         zmk_rgb_underglow_effect_swirl();
         break;
+    case UNDERGLOW_EFFECT_DEFAULTLAYER:
+        zmk_rgb_underglow_effect_layer_default();
+        break;
     }
 
-    int err = led_strip_update_rgb(led_strip, pixels, STRIP_NUM_PIXELS);
-    if (err < 0) {
-        LOG_ERR("Failed to update the RGB strip (%d)", err);
-    }
+    led_strip_update_rgb(led_strip, pixels, STRIP_NUM_PIXELS);
 }
 
 K_WORK_DEFINE(underglow_work, zmk_rgb_underglow_tick);
 
 static void zmk_rgb_underglow_tick_handler(struct k_timer *timer) {
-    if (!state.on) {
-        return;
-    }
-
     k_work_submit(&underglow_work);
 }
 
@@ -273,7 +291,13 @@ static struct k_work_delayable underglow_save_work;
 #endif
 
 static int zmk_rgb_underglow_init(const struct device *_arg) {
-    led_strip = DEVICE_DT_GET(STRIP_CHOSEN);
+    led_strip = device_get_binding(STRIP_LABEL);
+    if (led_strip) {
+        LOG_INF("Found LED strip device %s", STRIP_LABEL);
+    } else {
+        LOG_ERR("LED strip device %s not found", STRIP_LABEL);
+        return -EINVAL;
+    }
 
 #if IS_ENABLED(CONFIG_ZMK_RGB_UNDERGLOW_EXT_POWER)
     ext_power = device_get_binding("EXT_POWER");
@@ -309,12 +333,12 @@ static int zmk_rgb_underglow_init(const struct device *_arg) {
 #endif
 
 #if IS_ENABLED(CONFIG_ZMK_RGB_UNDERGLOW_AUTO_OFF_USB)
-    state.on = zmk_usb_is_powered();
+    // Turn off rgb if usb not connected on init
+    if (!zmk_usb_is_powered())
+        state.on = false;
 #endif
 
-    if (state.on) {
-        k_timer_start(&underglow_tick, K_NO_WAIT, K_MSEC(50));
-    }
+    k_timer_start(&underglow_tick, K_NO_WAIT, K_MSEC(50));
 
     return 0;
 }
@@ -351,7 +375,7 @@ int zmk_rgb_underglow_on() {
 
     state.on = true;
     state.animation_step = 0;
-    k_timer_start(&underglow_tick, K_NO_WAIT, K_MSEC(50));
+    //k_timer_start(&underglow_tick, K_NO_WAIT, K_MSEC(50));
 
     return zmk_rgb_underglow_save_state();
 }
@@ -375,7 +399,7 @@ int zmk_rgb_underglow_off() {
 
     led_strip_update_rgb(led_strip, pixels, STRIP_NUM_PIXELS);
 
-    k_timer_stop(&underglow_tick);
+    //k_timer_stop(&underglow_tick);
     state.on = false;
 
     return zmk_rgb_underglow_save_state();
