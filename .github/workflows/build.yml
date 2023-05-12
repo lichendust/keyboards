@@ -9,8 +9,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      # - name: Insert custom underglow code
-        # run: cp override/rgb_underglow.c zmk/app/src/
       - name: Cache West modules
         uses: actions/cache@v3
         env:
@@ -25,8 +23,8 @@ jobs:
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('manifest-dir/west.yml') }}
           restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build
--            ${{ runner.os }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
       - name: West Init
         run: west init -l config
       - name: West Update
