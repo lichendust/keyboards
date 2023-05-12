@@ -38,7 +38,7 @@ jobs:
       - name: Rename zmk.uf2
         run: cp build/zephyr/zmk.uf2 rotr.uf2
       - name: Archive (ROTR)
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: rotr
           path: rotr.uf2
