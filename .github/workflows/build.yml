@@ -1,0 +1,46 @@
+on: [push, pull_request, workflow_dispatch]
+name: Build
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: zmkfirmware/zmk-build-arm:stable
+    name: Build
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Cache West modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-zephyr-modules
+        with:
+          path: |
+            modules/
+            tools/
+            zephyr/
+            bootloader/
+            zmk/
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('manifest-dir/west.yml') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+      - name: West Init
+        run: west init -l config
+      - name: West Update
+        run: west update
+      - name: West Zephyr export
+        run: west zephyr-export
+      - name: Insert custom underglow code
+        run: cp override/rgb_underglow.c zmk/app/src/
+      - name: West Build
+        run: west build -s zmk/app -b rotr -- -DZMK_CONFIG="${GITHUB_WORKSPACE}/config"
+      - name: ROTR Kconfig file
+        run: cat build/zephyr/.config | grep -v "^#" | grep -v "^$"
+      - name: Rename zmk.uf2
+        run: cp build/zephyr/zmk.uf2 rotr.uf2
+      - name: Archive (ROTR)
+        uses: actions/upload-artifact@v2
+        with:
+          name: rotr
+          path: rotr.uf2
