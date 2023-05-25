@@ -3,12 +3,13 @@
 #include <dt-bindings/zmk/keys.h>
 
 #define BASE     0
-#define KRITA    1
-#define ASEPRITE 2
-#define REAPER   3
-#define FUNCTION 4
-#define NUMPAD   5
-#define LAYERS   6
+#define MACOS    1
+#define KRITA    2
+#define ASEPRITE 3
+#define REAPER   4
+#define FUNCTION 5
+#define NUMPAD   6
+#define LAYERS   7
 
 &caps_word {
     continue-list = <UNDERSCORE MINUS>;
@@ -26,6 +27,13 @@
                 &kp LGUI &kp LALT &kp LCTRL &kp SPACE &mo LAYERS &kp C_PP &kp LEFT &kp DOWN &kp RIGHT
             >;
         };
+        macos {
+            &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+            &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+            &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+            &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+            &kp LCTRL &trans &kp LGUI &trans &to BASE &trans &trans &trans &trans
+        }
         krita {
             bindings = <
                 &trans &kp N3 &kp N5 &kp N1 &none &none &none &none &none &none &none &kp LS(LC(F)) &none &trans
@@ -73,10 +81,10 @@
         };
         layer_controls {
             bindings = <
-                &bootloader &bt BT_CLR &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+                &bootloader &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &trans &trans &trans &trans &trans &trans &trans &trans &trans &BT_CLR
                 &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
                 &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-                &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+                &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &to MACOS &trans
                 &trans &trans &trans &trans &trans &to KRITA &to ASEPRITE &to REAPER &trans
             >;
         };
