@@ -28,12 +28,14 @@
             >;
         };
         macos {
-            &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-            &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-            &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-            &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-            &kp LCTRL &trans &kp LGUI &trans &to BASE &trans &trans &trans &trans
-        }
+            bindings = <
+                &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+                &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+                &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+                &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+                &kp LCTRL &trans &kp LGUI &trans &to BASE &trans &trans &trans &trans
+            >;
+        };
         krita {
             bindings = <
                 &trans &kp N3 &kp N5 &kp N1 &none &none &none &none &none &none &none &kp LS(LC(F)) &none &trans
