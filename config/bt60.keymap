@@ -40,8 +40,8 @@
             bindings = <
                 &trans &kp N1 &kp N5 &kp N3 &none &none &none &none &none &none &none &kp LC(LS(F)) &none &trans
                 &trans &kp KP_SLASH &kp B &kp E &none &kp LC(T) &kp LC(LS(A)) &kp LC(LS(D)) &none &none &none &trans &trans
-                &trans &kp LS(I) &kp V &kp LC(R) &kp LC(F) &kp LC(G) &kp LC(LS(G)) &kp LC(LA(G)) &none &none &none &kp LC(LA(S)) &kp LC(S) &trans
-                &trans &kp LC(LS(Z)) &kp LC(Z) &kp X &kp LC(C) &kp LC(V) &none &kp INS &trans &kp LC(LA(J)) &kp LC(LS(J)) &kp DEL &kp LS(DEL) &trans &none
+                &trans &kp LS(I) &kp LSHFT &kp LC(R) &kp LC(F) &kp LC(G) &kp LC(LS(G)) &kp LC(LA(G)) &none &none &none &kp LC(LA(S)) &kp LC(S) &trans
+                &kp V &kp LC(LS(Z)) &kp LC(Z) &kp X &kp LC(C) &kp LC(V) &none &kp INS &trans &kp LC(LA(J)) &kp LC(LS(J)) &kp DEL &kp LS(DEL) &trans &none
                 &kp LS(SPACE) &kp LC(SPACE) &trans &trans &to BASE &trans &trans &trans &trans
             >;
         };
