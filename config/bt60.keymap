@@ -100,7 +100,7 @@
     };
 
     macros {
-        switch_bt0: switch_bt0: {
+        switch_bt0: switch_bt0 {
             label = "ZM_switch_bt0";
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
@@ -108,7 +108,7 @@
             bindings = <&bt BT_SEL 1>, <&bt BT_DISC 0>;
         };
 
-        switch_bt1: switch_bt1: {
+        switch_bt1: switch_bt1 {
             label = "ZM_switch_bt1";
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
