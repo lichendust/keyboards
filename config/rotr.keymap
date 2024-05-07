@@ -19,7 +19,7 @@
         };
         shift {
             bindings = <&bt BT_CLR &to 0 &bootloader>;
-            sensor-bindings = <&def_lshft>;
+            // sensor-bindings = <&def_lshft>;
         };
     };
 };
