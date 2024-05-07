@@ -31,7 +31,7 @@
             #binding-cells = <0>;
             wait-ms = <30>;
             bindings = <&to 0>, <&rgb_ug RGB_OFF>;
-        }
+        };
         to_one: to_one {
             label = "ZM_to_one";
             compatible = "zmk,behavior-macro";
