@@ -8,7 +8,7 @@ jobs:
       fail-fast: false
       matrix:
         file:
-        - keymap.c
+        - transport.json
     steps:
     - name: Disable git safe directory
       run : git config --global --add safe.directory '*'
