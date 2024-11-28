@@ -1,5 +1,10 @@
 #include QMK_KEYBOARD_H
 
+bool oled_task_user() {
+	// do OLED stuff here
+	return false;
+}
+
 bool encoder_update_user(uint8_t index, bool clockwise) {
 	switch (index) {
 	case 0:
