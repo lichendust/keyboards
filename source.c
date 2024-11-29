@@ -1,7 +1,7 @@
 #include QMK_KEYBOARD_H
 
 bool oled_task_user(void) {
-	oled_write_P(PSTR("Layer: "), false);
+	oled_write_P(PSTR("\nLayer: "), false);
 
 	switch (get_highest_layer(layer_state)) {
 	case 0:
@@ -9,7 +9,7 @@ bool oled_task_user(void) {
 		break;
 
 	case 1:
-		oled_write_P(PSTR("Mouse Modifiers\n"), false);
+		oled_write_P(PSTR("Mouse Mods\n"), false);
 		break;
 	}
 	return false;
