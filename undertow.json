@@ -1,7 +1,7 @@
 {
 	"version": 1,
 	"keyboard": "dz60",
-	"keymap": "undertow",
+	"keymap": "lichendust",
 	"layout": "LAYOUT_60_iso_4th_row_all_1u",
 	"layers": [
 		[
