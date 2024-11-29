@@ -19,11 +19,11 @@
 			"S(KC_SPC)", "_______",    "_______",                                  "_______",                                           "_______",    "_______",    "_______",   "_______", "_______"
 		],
 		[
-			"_______", "_______",    "_______", "C(N0)",   "_______",    "XXXXXXX",    "XXXXXXX",     "XXXXXXX",       "XXXXXXX", "XXXXXXX", "XXXXXXX", "XXXXXXX",    "XXXXXXX",            "_______",
-			"_______", "KC_D",       "KC_B",    "KC_E",    "XXXXXXX",    "KC_V",       "C(KC_D)",     "S(C(KC_D))",    "XXXXXXX", "KC_LBRC", "KC_RBRC", "KC_MINS",    "KC_EQL",
-			"_______", "KC_MINS",    "KC_EQL",  "KC_M",    "KC_Q",       "S(A(KC_G))", "XXXXXXX",     "XXXXXXX",       "XXXXXXX", "XXXXXXX", "XXXXXXX", "XXXXXXX",    "C(KC_S)",            "_______",
-			"_______", "C(S(KC_Z))", "C(KC_Z)", "KC_X",    "C(KC_C)",    "C(KC_V)",    "KC_G",        "A(KC_N)",       "A(KC_B)", "A(KC_D)", "A(KC_M)", "KC_DEL",     "A(KC_C)", "_______", "XXXXXXX",
-			"KC_LBRC", "KC_RBRC",    "KC_LALT",                          "_______",                                                          "_______", "_______",    "_______", "_______", "_______"
+			"_______", "_______",    "_______", "C(KC_P0)", "_______", "XXXXXXX",    "XXXXXXX", "XXXXXXX",    "XXXXXXX", "XXXXXXX", "XXXXXXX", "XXXXXXX", "XXXXXXX",            "_______",
+			"_______", "KC_D",       "KC_B",    "KC_E",     "XXXXXXX", "KC_V",       "C(KC_D)", "S(C(KC_D))", "XXXXXXX", "KC_LBRC", "KC_RBRC", "KC_MINS", "KC_EQL",
+			"_______", "KC_MINS",    "KC_EQL",  "KC_M",     "KC_Q",    "S(A(KC_G))", "XXXXXXX", "XXXXXXX",    "XXXXXXX", "XXXXXXX", "XXXXXXX", "XXXXXXX", "C(KC_S)",            "_______",
+			"_______", "C(S(KC_Z))", "C(KC_Z)", "KC_X",     "C(KC_C)", "C(KC_V)",    "KC_G",    "A(KC_N)",    "A(KC_B)", "A(KC_D)", "A(KC_M)", "KC_DEL",  "A(KC_C)", "_______", "XXXXXXX",
+			"KC_LBRC", "KC_RBRC",    "KC_LALT",                                      "_______",                                     "_______", "_______", "_______", "_______", "_______"
 		],
 		[
 			"_______", "XXXXXXX",    "XXXXXXX", "XXXXXXX", "XXXXXXX",    "XXXXXXX",    "XXXXXXX",     "XXXXXXX",       "XXXXXXX", "XXXXXXX", "XXXXXXX", "XXXXXXX",    "XXXXXXX",               "_______",
