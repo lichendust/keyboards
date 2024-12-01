@@ -16,35 +16,30 @@ bool oled_task_user(void) {
 }
 
 bool encoder_update_user(uint8_t index, bool clockwise) {
-	switch (index) {
+	switch (get_highest_layer(layer_state)) {
 	case 0:
+		switch (index) {
 		// top left
-		/*if (get_highest_layer(1)) {
-			clockwise ? tap_code(KC_VOLU) : tap_code(KC_VOLD)
-			return false;
-		}*/
-		if (clockwise) {
-			tap_code(KC_VOLU);
-		} else {
-			tap_code(KC_VOLD);
-		}
-		break;
-	case 1:
+		case 0: clockwise ? tap_code(KC_VOLU)  : tap_code(KC_VOLD);
+
 		// top right
-		if (clockwise) {
-			tap_code(KC_RIGHT);
-		} else {
-			tap_code(KC_LEFT);
-		}
-		break;
-	case 2:
+		case 1:
+			register_code(KC_LEFT_SHIFT);
+			clockwise ? tap_code(KC_RIGHT) : tap_code(KC_LEFT);
+			unregister_code(KC_LEFT_SHIFT);
+
 		// big boi
-		if (clockwise) {
-			tap_code(KC_RIGHT);
-		} else {
-			tap_code(KC_LEFT);
+		case 2: clockwise ? tap_code(KC_RIGHT) : tap_code(KC_LEFT);
 		}
-		break;
+	case 1:
+		switch (index) {
+		// top left
+		case 0: clockwise ? tap_code(KC_VOLU)              : tap_code(KC_VOLD);
+		// top right
+		case 1: clockwise ? tap_code(QK_MOUSE_WHEEL_RIGHT) : tap_code(QK_MOUSE_WHEEL_LEFT);
+		// big boi
+		case 2: clockwise ? tap_code(QK_MOUSE_WHEEL_DOWN)  : tap_code(QK_MOUSE_WHEEL_UP);
+		}
 	}
 	return false;
 }
