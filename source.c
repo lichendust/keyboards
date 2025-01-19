@@ -21,7 +21,11 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
 		switch (index) {
 		// top right
 		case 0:
-			clockwise ? tap_code(KC_VOLU) : tap_code(KC_VOLD);
+			register_code(KC_LEFT_ALT);
+			register_code(KC_LEFT_SHIFT);
+			clockwise ? tap_code(KC_RIGHT) : tap_code(KC_LEFT);
+			unregister_code(KC_LEFT_SHIFT);
+			unregister_code(KC_LEFT_ALT);
 			break;
 
 		// top left
