@@ -4,7 +4,7 @@
 
 ## Keymap
 
-![](https://stuff.lichendust.com/media/wanderer_keymap.webp)
+![](https://stuff.lichendust.com/media/wanderer-keymap.webp)
 
 This keymap is often slightly behind the latest update for the source on this branch because it updates with my [website](https://lichendust.com).
 
