@@ -1,4 +1,6 @@
 SRC += source.c
+SRC += common/bitc_led.c
+SRC += common/remote_kb.c
 
 BOARD = GENERIC_RP_RP2040
 
