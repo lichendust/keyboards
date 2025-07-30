@@ -1,22 +1,7 @@
 #include QMK_KEYBOARD_H
 
-bool oled_task_user(void) {
-	oled_write_P(PSTR("\n\n  Layer: "), false);
-
-	switch (get_highest_layer(layer_state)) {
-	case 0:
-		oled_write_P(PSTR("Main\n"), false);
-		break;
-
-	case 1:
-		oled_write_P(PSTR("Mouse Mods\n"), false);
-		break;
-	}
-	return false;
-}
-
 bool encoder_update_user(uint8_t index, bool clockwise) {
-	switch (get_highest_layer(layer_state)) {
+	/*switch (get_highest_layer(layer_state)) {
 	case 0:
 		switch (index) {
 		// top right
@@ -59,6 +44,6 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
 			break;
 		}
 		break;
-	}
+	}*/
 	return false;
 }
