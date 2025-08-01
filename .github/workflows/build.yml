@@ -15,7 +15,8 @@ jobs:
     - name: Checkout QMK
       uses: actions/checkout@v4
       with:
-        repository: qmk/qmk_firmware
+        repository: jaygreco/qmk_firmware
+        ref: rp2040_clean
         submodules: recursive
     - name: Checkout userspace
       uses: actions/checkout@v4
