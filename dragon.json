@@ -12,18 +12,18 @@
             "KC_P0", "KC_P0",   "KC_PDOT", "KC_PENT"
         ],
         [
-                       "C(KC_S)", "KC_TRNS", "KC_TRNS",
-            "KC_TRNS", "KC_TRNS", "KC_TRNS", "KC_TRNS",
-            "MO(2)",   "KC_TRNS", "KC_TRNS", "KC_TRNS",
-            "KC_TRNS", "KC_TRNS", "KC_TRNS", "KC_TRNS",
-            "KC_TRNS", "KC_TRNS", "KC_TRNS", "KC_TRNS"
+                       "C(KC_S)",  "KC_1",    "KC_2",
+            "KC_TAB",  "KC_SLSH",  "KC_B",    "KC_E",
+            "MO(2)",   "KC_RGHT",  "KC_LSFT", "C(KC_F)",
+            "KC_V",    "KC_Z",     "KC_GRV",  "S(KC_I)",
+            "KC_LGUI", "KC_LALT",  "KC_LCTL", "KC_SPC"
         ],
         [
-                       "C(KC_S)", "TO(0)",   "KC_TRNS",
-            "KC_TRNS", "KC_TRNS", "KC_TRNS", "KC_TRNS",
-            "KC_TRNS", "KC_TRNS", "KC_TRNS", "KC_TRNS",
-            "KC_TRNS", "KC_TRNS", "KC_TRNS", "KC_TRNS",
-            "KC_TRNS", "KC_TRNS", "KC_TRNS", "KC_TRNS"
+                       "XXXXXXX", "TO(0)",   "XXXXXXX",
+            "XXXXXXX", "KC_MPRV", "KC_MPLY", "KC_MNXT",
+            "KC_TRNS", "KC_VOLD", "KC_MUTE", "KC_VOLU",
+            "XXXXXXX", "KC_BRID", "KC_BRIU", "XXXXXXX",
+            "XXXXXXX", "XXXXXXX", "XXXXXXX", "XXXXXXX"
         ]
     ]
 }
