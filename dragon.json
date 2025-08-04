@@ -17,6 +17,13 @@
             "KC_TRNS", "KC_TRNS", "KC_TRNS", "KC_TRNS",
             "KC_TRNS", "KC_TRNS", "KC_TRNS", "KC_TRNS",
             "KC_TRNS", "KC_TRNS", "KC_TRNS", "KC_TRNS"
+        ],
+        [
+                       "KC_TRNS", "KC_TRNS", "KC_TRNS",
+            "KC_TRNS", "KC_TRNS", "KC_TRNS", "KC_TRNS",
+            "KC_TRNS", "KC_TRNS", "KC_TRNS", "KC_TRNS",
+            "KC_TRNS", "KC_TRNS", "KC_TRNS", "KC_TRNS",
+            "KC_TRNS", "KC_TRNS", "KC_TRNS", "KC_TRNS"
         ]
     ]
 }
