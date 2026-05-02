@@ -23,11 +23,12 @@
                 &lt NUMPAD TAB &kp Q &kp W &kp E &kp R &kp T &kp Y &kp U &kp I &kp O &kp P &kp LBKT &kp RBKT
                 &mo FUNCTION &kp A &kp S &kp D &kp F &kp G &kp H &kp J &kp K &kp L &kp SEMI &kp SQT &kp BSLH &kp RET
                 &kp LSHFT &kp GRAVE &kp Z &kp X &kp C &kp V &kp B &kp N &kp M &kp COMMA &kp DOT &kp FSLH &kp KP_DOT &kp UP &kp RSHFT
-                &kp LCTRL &kp LALT &kp LGUI &kp SPACE &to BASE &kp C_PP &kp LEFT &kp DOWN &kp RIGHT
+                &kp LGUI &kp LALT &kp LCTRL &kp SPACE &to BASE &kp C_PP &kp LEFT &kp DOWN &kp RIGHT
             >;
         };
 
         krita {
+        /*krita_windows {
             bindings = <
                 &trans &trans &trans &trans &trans &trans &trans &trans &kp LSHFT &kp LALT &kp LCTRL &kp LC(LS(F)) &kp LS(LC(LA(E))) &trans
                 &trans &kp KP_SLASH &kp B &kp E &trans &kp LC(T) &kp LC(LS(A)) &kp LC(LS(D)) &none &none &none &trans &trans
@@ -35,9 +36,20 @@
                 &kp V &kp LC(LS(Z)) &kp LC(Z) &trans &kp LC(C) &kp LC(V) &kp F &kp INS &trans &kp LC(LA(J)) &kp LC(LS(J)) &kp DEL &kp LS(DEL) &trans &none
                 &kp LS(SPACE) &trans &trans &trans &trans &trans &trans &trans &trans
             >;
+        };*/
+
+        krita_macos {
+            bindings = <
+                &trans &trans &trans &trans &trans &trans &trans &trans &kp LSHFT &kp LALT &kp LCTRL &kp LG(LS(F)) &kp LS(LG(LA(E))) &trans
+                &trans &kp KP_SLASH &kp B &kp E &trans &kp LG(T) &kp LG(LS(A)) &kp LG(LS(D)) &none &none &none &trans &trans
+                &trans &kp LS(I) &kp LSHFT &kp LG(R) &kp LG(F) &kp LG(G) &kp LG(LS(G)) &kp LG(LA(G)) &none &none &none &kp LG(LA(S)) &kp LG(S) &trans
+                &kp V &kp LG(LS(Z)) &kp LG(Z) &trans &kp LG(C) &kp LG(V) &kp F &kp INS &trans &kp LC(LA(J)) &kp LC(LS(J)) &kp DEL &kp LS(DEL) &trans &none
+                &kp LS(SPACE) &trans &trans &trans &trans &trans &trans &trans &trans
+            >;
         };
 
         aseprite {
+        aseprite_windows {
             bindings = <
                 &trans &trans &trans &kp LC(N0) &trans &none &none &none &none &none &none &none &none &trans
                 &trans &kp D &kp B &kp E &none &kp V &kp LC(D) &kp LS(LC(D)) &none &kp LBKT &kp RBKT &kp MINUS &kp EQUAL
@@ -48,6 +60,7 @@
         };
 
         reaper {
+        reaper_windows {
             bindings = <
                 &trans &none &none &none &none &none &none &none &none &none &none &none &none &trans
                 &trans &none &none &none &rea_rec &rea_over &none &none &trans &trans &none &rea_del_l &rea_del_r
