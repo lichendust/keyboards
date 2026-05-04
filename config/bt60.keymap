@@ -27,7 +27,6 @@
             >;
         };
 
-        krita {
         /*krita_windows {
             bindings = <
                 &trans &trans &trans &trans &trans &trans &trans &trans &kp LSHFT &kp LALT &kp LCTRL &kp LC(LS(F)) &kp LS(LC(LA(E))) &trans
@@ -48,7 +47,6 @@
             >;
         };
 
-        aseprite {
         aseprite_windows {
             bindings = <
                 &trans &trans &trans &kp LC(N0) &trans &none &none &none &none &none &none &none &none &trans
@@ -59,7 +57,6 @@
             >;
         };
 
-        reaper {
         reaper_windows {
             bindings = <
                 &trans &none &none &none &none &none &none &none &none &none &none &none &none &trans
