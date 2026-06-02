@@ -2,6 +2,19 @@
     "version": 1,
     "keyboard": "doio/kb38",
     "keymap": "lichendust",
+    "features": {
+        "tap_dance": false,
+        "bootmagic": false,
+        "mousekey":  true,
+        "extrakey":  true,
+        "console":   false,
+        "command":   false,
+        "sleep_led": false,
+        "nkro":      true,
+        "audio":     false,
+        "backlight": false,
+        "rgblight":  false,
+    },
     "layout": "LAYOUT",
     "layers": [
         [
