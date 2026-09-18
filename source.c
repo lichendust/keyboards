@@ -9,7 +9,7 @@ bool oled_task_user(void) {
 		break;
 
 	case 1:
-		oled_write_P(PSTR("Mouse Mods\n"), false);
+		oled_write_P(PSTR("Painting\n"), false);
 		break;
 	}
 	return false;
@@ -41,6 +41,7 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
 			break;
 		}
 		break;
+
 	case 1:
 		switch (index) {
 		// top right
