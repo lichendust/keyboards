@@ -31,7 +31,7 @@
             "KC_Q",    "KC_B",     "KC_E",     "_______",    "_______",  "_______",  "_______",    "TO(0)",                  "TO(0)",
             "KC_A",    "KC_LSFT",  "KC_D",                   "MS_BTN1",  "MS_BTN3",  "MS_BTN2",
             "C(Z)",    "KC_X",     "S(I)",     "_______",                "KC_LGUI",                            "XXXXXXX",
-            "KC_LCTRL",            "KC_LGUI",                "KC_LALT",  "KC_LSFT",  "KC_LCTL"
+            "KC_LCTL",             "KC_LGUI",                "KC_LALT",  "KC_LSFT",  "KC_LCTL"
         ]
     ]
 }
