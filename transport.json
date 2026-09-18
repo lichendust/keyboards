@@ -26,12 +26,12 @@
             "KC_P0",               "KC_PDOT",                "KC_LEFT",  "KC_DOWN",  "KC_RGHT"
         ],
         [
-            "_______",             "_______",                "_______",  "_______",  "_______",    "QK_UNDERGLOW_TOGGLE", "BL_OFF", "QK_BOOT",
-            "LCS(Z)", "_______",   "_______",  "_______",    "_______",  "_______",  "_______",
-            "KC_Q",    "KC_B",     "KC_E",     "_______",    "_______",  "_______",  "_______",    "TO(0)",                  "TO(0)",
-            "KC_A",    "KC_LSFT",  "KC_D",                   "MS_BTN1",  "MS_BTN3",  "MS_BTN2",
-            "C(Z)",    "KC_X",     "S(I)",     "_______",                "KC_LGUI",                            "XXXXXXX",
-            "KC_LCTL",             "KC_LGUI",                "KC_LALT",  "KC_LSFT",  "KC_LCTL"
+            "_______",               "_______",                "_______",  "_______",  "_______",    "QK_UNDERGLOW_TOGGLE", "BL_OFF", "QK_BOOT",
+            "LCS(KC_Z)", "_______",  "_______",  "_______",    "_______",  "_______",  "_______",
+            "KC_Q",      "KC_B",     "KC_E",     "_______",    "_______",  "_______",  "_______",    "TO(0)",                  "TO(0)",
+            "KC_A",      "KC_LSFT",  "KC_D",                   "MS_BTN1",  "MS_BTN3",  "MS_BTN2",
+            "C(KC_Z)",   "KC_X",     "S(KC_I)",  "_______",                "KC_LGUI",                            "XXXXXXX",
+            "KC_LCTL",               "KC_LGUI",                "KC_LALT",  "KC_LSFT",  "KC_LCTL"
         ]
     ]
 }
