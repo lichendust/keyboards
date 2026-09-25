@@ -13,18 +13,19 @@ jobs:
     - name: Disable git safe directory
       run : git config --global --add safe.directory '*'
     - name: Checkout QMK
-      uses: actions/checkout@v4
+      uses: actions/checkout@v7
       with:
-        repository: qmk/qmk_firmware
+        repository: jaygreco/qmk_firmware
+        ref: rp2040_clean
         submodules: recursive
     - name: Checkout userspace
-      uses: actions/checkout@v4
+      uses: actions/checkout@v7
       with:
         path: users/${{ github.actor }}
     - name: Build firmware
       run: qmk compile "users/${{ github.actor }}/${{ matrix.file }}"
     - name: Archive Firmware
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       continue-on-error: true
       with:
         name: firmware
