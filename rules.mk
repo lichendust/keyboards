@@ -4,6 +4,15 @@ SRC += common/remote_kb.c
 
 BOARD = GENERIC_RP_RP2040
 
+# MCU name
+MCU = RP2040
+
+# Bootloader selection
+BOOTLOADER = rp2040
+
+WS2812_DRIVER = vendor
+# CONSOLE_ENABLE = yes        # Console for debug
+
 TAP_DANCE_ENABLE     = no
 BOOTMAGIC_ENABLE     = no
 MOUSEKEY_ENABLE      = no
