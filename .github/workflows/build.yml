@@ -26,6 +26,7 @@ jobs:
       run: |
         mkdir -p $dragon_path
         cp users/${{ github.actor }}/*.* $dragon_path
+        cd qmk_firmware
         qmk compile -kb nullbitsco/tidbit/rp2040 -km dragonpad
 
     - name: Archive Firmware
