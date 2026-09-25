@@ -1,14 +1,14 @@
 name: Build QMK firmware
+
 on: [push, workflow_dispatch]
+
+env:
+  dragon_path: qmk_firmware/keyboards/nullbitsco/tidbit/keymaps/dragonpad/
+
 jobs:
   build:
     runs-on: ubuntu-latest
     container: qmkfm/qmk_cli
-    strategy:
-      fail-fast: false
-      matrix:
-        file:
-        - dragon.json
     steps:
     - name: Disable git safe directory
       run : git config --global --add safe.directory '*'
@@ -23,7 +23,11 @@ jobs:
       with:
         path: users/${{ github.actor }}
     - name: Build firmware
-      run: qmk compile "users/${{ github.actor }}/${{ matrix.file }}"
+      run: |
+        mkdir -p $dragon_path
+        cp users/${{ github.actor }}/*.* $dragon_path
+        qmk compile -kb nullbitsco/tidbit/rp2040 -km dragonpad
+
     - name: Archive Firmware
       uses: actions/upload-artifact@v7
       continue-on-error: true
