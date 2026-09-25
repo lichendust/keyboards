@@ -1,3 +1,4 @@
+SRC += source.c
 # TAP_DANCE_ENABLE     = no
 # BOOTMAGIC_ENABLE     = no
 # MOUSEKEY_ENABLE      = no
