@@ -28,6 +28,7 @@ jobs:
         cp users/${{ github.actor }}/*.* $dragon_path
         ls $dragon_path
     - name: Build firmware
+      run: |
         cd qmk_firmware
         /opt/uv/tools/qmk/bin/python3 -m pip install -r /__w/keyboards/keyboards/requirements.txt
         qmk compile -kb nullbitsco/tidbit/rp2040 -km dragonpad
