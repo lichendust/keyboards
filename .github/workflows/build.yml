@@ -22,11 +22,14 @@ jobs:
       uses: actions/checkout@v7
       with:
         path: users/${{ github.actor }}
-    - name: Build firmware
+    - name: Copy custom
       run: |
         mkdir -p $dragon_path
         cp users/${{ github.actor }}/*.* $dragon_path
+        ls $dragon_path
+    - name: Build firmware
         cd qmk_firmware
+        /opt/uv/tools/qmk/bin/python3 -m pip install -r /__w/keyboards/keyboards/requirements.txt
         qmk compile -kb nullbitsco/tidbit/rp2040 -km dragonpad
 
     - name: Archive Firmware
