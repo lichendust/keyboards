@@ -38,20 +38,20 @@ const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
 };
 #endif*/
 
-bool encoder_update_user(uint8_t index, bool clockwise) {
+bool encoder_update_user(uint8_t index, bool anti_clockwise) {
 	switch (get_highest_layer(layer_state)) {
 	case 0:
-		clockwise ? tap_code(KC_RIGHT) : tap_code(KC_LEFT);
+		anti_clockwise ? tap_code(KC_LEFT) : tap_code(KC_RIGHT);
 		break;
 
 	case 1:
 		register_code(KC_LEFT_SHIFT);
-		clockwise ? tap_code(KC_RIGHT) : tap_code(KC_LEFT);
+		anti_clockwise ? tap_code(KC_LEFT) : tap_code(KC_RIGHT);
 		unregister_code(KC_LEFT_SHIFT);
 		break;
 
 	case 2:
-		clockwise ? tap_code(KC_VOLU) : tap_code(KC_VOLD);
+		anti_clockwise ? tap_code(KC_VOLD) : tap_code(KC_VOLU);
 		break;
 	}
 
