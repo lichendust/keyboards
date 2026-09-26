@@ -1,8 +1,11 @@
-dragon_path: qmk_firmware/keyboards/nullbitsco/tidbit/keymaps/dragonpad/
+dragon_firm: dragon_firmware
+dragon_path: dragon_firmware/keyboards/nullbitsco/tidbit/keymaps/dragonpad/
 
 [clone]
-	git clone -b rp2040_clean https://github.com/jaygreco/qmk_firmware
+	git clone -b rp2040_clean https://github.com/jaygreco/$dragon_firm
+	push_dir $dragon_firm
 	git submodule update
+	pop_dir
 
 [copy]
 	mkdir -p $dragon_path
@@ -10,5 +13,5 @@ dragon_path: qmk_firmware/keyboards/nullbitsco/tidbit/keymaps/dragonpad/
 
 [build]
 	also copy
-	push_dir qmk_firmware
+	push_dir $dragon_firm
 	qmk compile -kb nullbitsco/tidbit/rp2040 -km dragonpad
