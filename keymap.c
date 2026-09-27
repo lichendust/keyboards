@@ -16,11 +16,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_P0, KC_P0,   KC_PDOT, KC_PENT
     ),
     [_KRITA] = LAYOUT(
-                  C(KC_S),  KC_1,    KC_2,
-        KC_TAB,   KC_SLSH,  KC_B,    KC_E,
-        MO(2),    KC_RGHT,  KC_LSFT, C(KC_F),
-        KC_V,     KC_Z,     KC_GRV,  S(KC_I),
-        KC_LGUI,  KC_LALT,  KC_LCTL, KC_SPC
+                  G1 (KC_S),  KC_1,    KC_2,l
+        KC_TAB,   KC_Q,     KC_B,    KC_E,
+        MO(2),    KC_RGHT,  KC_LSFT, G(KC_F),
+        KC_V,     G(KC_Z),  KC_X,    S(KC_I),
+        KC_LCTL,  KC_LALT,  KC_LGUI, KC_SPC
     ),
     [_MEDIA] = LAYOUT(
                  XXXXXXX, TO(0),   XXXXXXX,
