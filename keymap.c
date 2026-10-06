@@ -9,21 +9,23 @@ enum layers {
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_BASIC] = LAYOUT(
-               KC_MPLY, TO(1),   KC_PSLS,
+               TO(1),   KC_MPLY, KC_PSLS,
         KC_P7, KC_P8,   KC_P9,   KC_PAST,
         KC_P4, KC_P5,   KC_P6,   KC_PMNS,
         KC_P1, KC_P2,   KC_P3,   KC_PPLS,
         KC_P0, KC_P0,   KC_PDOT, KC_PENT
     ),
+
     [_KRITA] = LAYOUT(
                   G(KC_S),  KC_1,      KC_2,
-        KC_TAB,   KC_Q,     KC_B,      KC_E,
+        KC_TAB,   KC_F1,    KC_B,      KC_E,
         MO(2),    KC_RGHT,  KC_LSFT,   G(KC_F),
         KC_V,     G(KC_Z),  LSG(KC_Z), S(KC_I),
-        KC_LCTL,  KC_LALT,  KC_LGUI,   KC_SPC
+        XXXXXXX,  XXXXXXX,  KC_LGUI,   KC_SPC
     ),
+
     [_MEDIA] = LAYOUT(
-                 XXXXXXX, TO(0),   XXXXXXX,
+                 TO(0),   KC_F1,   KC_BSPC,
         XXXXXXX, KC_MPRV, KC_MPLY, KC_MNXT,
         KC_TRNS, KC_VOLD, KC_MUTE, KC_VOLU,
         XXXXXXX, KC_BRID, KC_BRIU, XXXXXXX,
